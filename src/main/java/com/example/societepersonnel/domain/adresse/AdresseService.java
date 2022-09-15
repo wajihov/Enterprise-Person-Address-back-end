@@ -16,12 +16,10 @@ public class AdresseService {
         this.adresseMapper = adresseMapper;
     }
 
-    public AdresseDto create(AdresseDto adresseDto) {
-        log.info("adding adresse {}", adresseDto.getAdresse());
+    public AdresseDto createAdresse(AdresseDto adresseDto) {
         Adresse adresse = adresseMapper.toEntity(adresseDto);
         adresse = adresseRepository.save(adresse);
         return adresseMapper.toDto(adresse);
     }
-
 
 }

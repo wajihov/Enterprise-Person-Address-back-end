@@ -16,8 +16,8 @@ public class AdresseMapper {
         }
         return Adresse.builder()
                 .id(adresseDto.getId())
-                .address(adresseDto.getAdresse())
-                .codePostal(adresseDto.getCodePostal())
+                .adresse(adresseDto.getAdresse())
+                .ville(adresseDto.getVille())
                 .pays(adresseDto.getPays())
                 .codePostal(adresseDto.getCodePostal())
                 .build();
@@ -29,8 +29,8 @@ public class AdresseMapper {
         }
         return AdresseDto.builder()
                 .id(adresse.getId())
-                .adresse(adresse.getAddress())
-                .codePostal(adresse.getCodePostal())
+                .adresse(adresse.getAdresse())
+                .ville(adresse.getVille())
                 .pays(adresse.getPays())
                 .codePostal(adresse.getCodePostal())
                 .build();

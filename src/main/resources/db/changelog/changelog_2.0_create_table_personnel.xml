@@ -11,29 +11,13 @@
             <column name="name" type="varchar(100)"/>
             <column name="last_name" type="varchar(100)"/>
             <column name="post" type="varchar(100)"/>
+            <column name="entreprise_id" type="int"/>
             <column name="adresse_id" type="int"/>
         </createTable>
-
-        <createTable tableName="enterprise">
-            <column name="id" type="int">
-                <constraints primaryKey="true" primaryKeyName="enterprise_id_pk"/>
-            </column>
-            <column name="post" type="varchar(100)"/>
-            <column name="num_fiscale" type="varchar(100)"/>
-            <column name="personnel_id" type="int">
-                <constraints nullable="false"/>
-            </column>
-            <column name="adresse_id" type="int"/>
-        </createTable>
-
-
         <addAutoIncrement tableName="personnel" columnName="id" columnDataType="int" startWith="1" incrementBy="1"/>
-        <addAutoIncrement tableName="enterprise" columnName="id" columnDataType="int" startWith="1" incrementBy="1"/>
-
-        <addForeignKeyConstraint baseTableName="enterprise" baseColumnNames="personnel_id"
-                                 constraintName="enterprise_personnel_id_fk" referencedTableName="personnel"
+        <addForeignKeyConstraint baseTableName="personnel" baseColumnNames="entreprise_id"
+                                 constraintName="enterprise_personnel_id_fk" referencedTableName="entreprise"
                                  referencedColumnNames="id"/>
-
     </changeSet>
 
 </databaseChangeLog>

@@ -19,7 +19,7 @@ public class Adresse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String address;
+    private String adresse;
     private String ville;
     private String pays;
     private String codePostal;

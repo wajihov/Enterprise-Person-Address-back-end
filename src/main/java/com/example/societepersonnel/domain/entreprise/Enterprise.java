@@ -2,6 +2,7 @@ package com.example.societepersonnel.domain.entreprise;
 
 import com.example.societepersonnel.domain.adresse.Adresse;
 import com.example.societepersonnel.domain.personnel.Personnel;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class Enterprise {
 
     @OneToOne
     private Adresse adresse;
+    //@JsonProperty()
     @OneToMany(mappedBy = "enterprise", fetch = FetchType.LAZY)
     private List<Personnel> personnels;
 }

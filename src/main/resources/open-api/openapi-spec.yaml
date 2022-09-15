@@ -328,10 +328,6 @@ components:
           type: string
         num_fiscale:
           type: string
-        personnels:
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonDto'
         adresse_id:
           format: int64
           type: integer
