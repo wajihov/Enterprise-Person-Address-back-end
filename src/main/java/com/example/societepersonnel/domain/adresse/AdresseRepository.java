@@ -1,4 +1,4 @@
-package com.example.societepersonnel.domaine.adresse;
+package com.example.societepersonnel.domain.adresse;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

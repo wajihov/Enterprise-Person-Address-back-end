@@ -2,13 +2,13 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    url: jdbc:mysql://localhost:3306/personnel-societe
+    url: jdbc:mysql://localhost:3306/personnel-entreprise
     password: ''
   h2:
     console:
       enabled: 'true'
   application:
-    name: societe-personnel
+    name: entreprise-personnel
   liquibase:
     enabled: 'true'
     change-log: classpath:db/changelog/changelog-master.xml

@@ -1,7 +1,7 @@
-package com.example.societepersonnel.domaine.personnel;
+package com.example.societepersonnel.domain.personnel;
 
-import com.example.societepersonnel.domaine.adresse.Adresse;
-import com.example.societepersonnel.domaine.societe.Enterprise;
+import com.example.societepersonnel.domain.adresse.Adresse;
+import com.example.societepersonnel.domain.entreprise.Enterprise;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +21,7 @@ public class Personnel {
     private Long id;
     private String name;
     private String lastName;
+    @Enumerated(EnumType.STRING)
     private Post post;
 
     @OneToOne

@@ -1,7 +1,7 @@
-package com.example.societepersonnel.domaine.societe;
+package com.example.societepersonnel.domain.entreprise;
 
-import com.example.societepersonnel.domaine.adresse.Adresse;
-import com.example.societepersonnel.domaine.personnel.Personnel;
+import com.example.societepersonnel.domain.adresse.Adresse;
+import com.example.societepersonnel.domain.personnel.Personnel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

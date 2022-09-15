@@ -1,4 +1,4 @@
-package com.example.societepersonnel.domaine.adresse;
+package com.example.societepersonnel.domain.adresse;
 
 import com.example.societepersonnel.AdressesApiDelegate;
 import com.example.societepersonnel.dto.AdresseDto;
@@ -16,7 +16,7 @@ public class AdresseController implements AdressesApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Boolean> deleteAdress(String id) {
+    public ResponseEntity<Boolean> deleteAdresse(String id) {
         return null;
     }
 
@@ -31,7 +31,7 @@ public class AdresseController implements AdressesApiDelegate {
     }
 
     @Override
-    public ResponseEntity<AdresseDto> updateAdress(String id, AdresseDto adresseDto) {
+    public ResponseEntity<AdresseDto> updateAdresse(String id, AdresseDto adresseDto) {
         return null;
     }
 }

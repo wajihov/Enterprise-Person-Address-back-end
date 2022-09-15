@@ -1,5 +1,6 @@
-package com.example.societepersonnel.domaine.adresse;
+package com.example.societepersonnel.domain.adresse;
 
+import com.example.societepersonnel.dto.AdresseDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class AdresseMapper {
             return null;
         }
         return Adresse.builder()
+                .id(adresseDto.getId())
                 .address(adresseDto.getAdresse())
                 .codePostal(adresseDto.getCodePostal())
                 .pays(adresseDto.getPays())
@@ -26,6 +28,7 @@ public class AdresseMapper {
             return null;
         }
         return AdresseDto.builder()
+                .id(adresse.getId())
                 .adresse(adresse.getAddress())
                 .codePostal(adresse.getCodePostal())
                 .pays(adresse.getPays())
