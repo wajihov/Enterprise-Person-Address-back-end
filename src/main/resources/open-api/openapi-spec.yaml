@@ -1,0 +1,361 @@
+openapi: 3.0.2
+info:
+  title: societe-person-api
+  version: 1.0.0
+  description: A brand new API with no content.  Go nuts!
+paths:
+  /persons:
+    get:
+      tags:
+      - Person
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/personDto'
+          description: Get all persons in the base
+      operationId: findAllPersons
+      summary: Get all persons
+    post:
+      requestBody:
+        description: 'Add person in the base '
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/personDto'
+        required: true
+      tags:
+      - Person
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/personDto'
+          description: Created person successfully
+      operationId: createPerson
+      summary: Create person
+  /adresses:
+    summary: Path used to manage the list of adressedtos.
+    description: >-
+      The REST endpoint/path used to list and create zero or more `adresseDto` entities.  This path
+      contains a `GET` and `POST` operation to perform the list and create tasks, respectively.
+    get:
+      tags:
+      - Adresse
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/adresseDto'
+          description: Successful response - returns an array of `adresseDto` entities.
+      operationId: findAdresses
+      summary: List All adresses
+      description: Gets a list of all `adresseDto` entities.
+    post:
+      requestBody:
+        description: A new `adresseDto` to be created.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/adresseDto'
+        required: true
+      tags:
+      - Adresse
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/adresseDto'
+          description: Successful response.
+      operationId: createAdresse
+      summary: Create a adresse
+      description: Creates a new instance of a `adresseDto`.
+  '/adresses/{id}':
+    summary: Path used to manage a single adresseDto.
+    description: >-
+      The REST endpoint/path used to get, update, and delete single instances of an `adresseDto`.  This
+      path contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete
+      tasks, respectively.
+    get:
+      tags:
+      - Adresse
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/adresseDto'
+          description: Successful response - returns a single `adresseDto`.
+      operationId: findAdresseById
+      summary: Get an adress with id
+      description: Gets the details of a single instance of a `adresseDto`.
+    put:
+      requestBody:
+        description: Updated `adresseDto` information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/adresseDto'
+        required: true
+      tags:
+      - Adresse
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/adresseDto'
+          description: Successful response.
+      operationId: updateAdress
+      summary: Update an adress
+      description: Updates an existing `adresseDto`.
+    delete:
+      tags:
+      - Adresse
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                type: boolean
+          description: Successful response.
+      operationId: deleteAdress
+      summary: Delete an adress
+      description: Deletes an existing `adresseDto`.
+    parameters:
+    - name: id
+      description: A unique identifier for a `adresseDto`.
+      schema:
+        type: string
+      in: path
+      required: true
+  /enterprises:
+    summary: Path used to manage the list of enterprisedtos.
+    description: >-
+      The REST endpoint/path used to list and create zero or more `enterpriseDto` entities.  This path
+      contains a `GET` and `POST` operation to perform the list and create tasks, respectively.
+    get:
+      tags:
+      - Entreprise
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/enterpriseDto'
+          description: Successful response - returns an array of `enterpriseDto` entities.
+      operationId: findEnterprises
+      summary: List All enterprises
+      description: Gets a list of all `enterpriseDto` entities.
+    post:
+      requestBody:
+        description: A new `enterpriseDto` to be created.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/enterpriseDto'
+        required: true
+      tags:
+      - Entreprise
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enterpriseDto'
+          description: Successful response.
+      operationId: createEnterprise
+      summary: Create a enterprise
+      description: Creates a new instance of a `enterpriseDto`.
+  '/enterprises/{id}':
+    summary: Path used to manage a single enterpriseDto.
+    description: >-
+      The REST endpoint/path used to get, update, and delete single instances of an `enterpriseDto`.
+      This path contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and
+      delete tasks, respectively.
+    get:
+      tags:
+      - Entreprise
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enterpriseDto'
+          description: Successful response - returns a single `enterpriseDto`.
+      operationId: findEnterpriseById
+      summary: Get an enterprise
+      description: Gets the details of a single instance of a `enterpriseDto`.
+    put:
+      requestBody:
+        description: Updated `enterpriseDto` information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/enterpriseDto'
+        required: true
+      tags:
+      - Entreprise
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enterpriseDto'
+          description: Successful response.
+      operationId: updateEnterprise
+      summary: Update a enterpriseDto
+      description: Updates an existing `enterpriseDto`.
+    delete:
+      tags:
+      - Entreprise
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                type: boolean
+          description: Successful response.
+      operationId: deleteEnterprise
+      summary: Delete an enterprise
+      description: Deletes an existing `enterpriseDto`.
+    parameters:
+    - name: id
+      description: A unique identifier for a `enterpriseDto`.
+      schema:
+        type: string
+      in: path
+      required: true
+  '/persons/{id}':
+    summary: Path used to manage a single personDto.
+    description: >-
+      The REST endpoint/path used to get, update, and delete single instances of an `personDto`.  This
+      path contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete
+      tasks, respectively.
+    get:
+      tags:
+      - Person
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/personDto'
+          description: Successful response - returns a single `personDto`.
+        '404':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Successful response - returns a single `personDto`.
+      operationId: findPersonById
+      summary: Get a person by id
+      description: Gets the details of a single instance of a `personDto`.
+    put:
+      requestBody:
+        description: Updated `personDto` information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/personDto'
+        required: true
+      tags:
+      - Person
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/adresseDto'
+          description: Successful response.
+      operationId: updatePerson
+      summary: Update a person
+      description: Updates an existing `personDto`.
+    delete:
+      tags:
+      - Person
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                type: boolean
+          description: Successful response.
+      operationId: deletePerson
+      summary: Delete a person by id
+      description: Deletes an existing `personDto`.
+    parameters:
+    - name: id
+      schema:
+        type: string
+      in: path
+      required: true
+components:
+  schemas:
+    personDto:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        name:
+          type: string
+        lastName:
+          type: string
+        post:
+          type: string
+        adresse:
+          type: array
+          items:
+            $ref: '#/components/schemas/adresseDto'
+        enterprise_id:
+          format: int64
+          type: integer
+    adresseDto:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        adresse:
+          type: string
+        ville:
+          type: string
+        pays:
+          type: string
+        code_postal:
+          type: string
+    enterpriseDto:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        name:
+          type: string
+        num_fiscale:
+          type: string
+        adresse:
+          type: array
+          items:
+            $ref: '#/components/schemas/adresseDto'
+        personnels:
+          type: array
+          items:
+            $ref: '#/components/schemas/personDto'

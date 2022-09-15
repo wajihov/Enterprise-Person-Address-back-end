@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="2" author="wajih">
+
+        <createTable tableName="adresse">
+            <column name="id" type="int">
+                <constraints primaryKey="true" primaryKeyName="adresse_id_pk"/>
+            </column>
+            <column name="adresse" type="varchar(100)"/>
+            <column name="ville" type="varchar(100)"/>
+            <column name="pays" type="varchar(100)"/>
+            <column name="code_postal" type="varchar(100)"/>
+        </createTable>
+
+
+        <addAutoIncrement tableName="adresse" columnName="id" columnDataType="int" incrementBy="1" startWith="1"/>
+
+        <addForeignKeyConstraint baseTableName="enterprise" baseColumnNames="adresse_id"
+                                 constraintName="enterprise_adresse_id_fk" referencedTableName="adresse"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="personnel" baseColumnNames="adresse_id"
+                                 constraintName="personnel_adresse_id_fk" referencedTableName="adresse"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

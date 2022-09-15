@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="1" author="wajih">
+        <createTable tableName="personnel">
+            <column name="id" type="int">
+                <constraints primaryKey="true" primaryKeyName="personnel_id_pk"/>
+            </column>
+            <column name="name" type="varchar(100)"/>
+            <column name="last_name" type="varchar(100)"/>
+            <column name="post" type="varchar(100)"/>
+            <column name="adresse_id" type="int"/>
+        </createTable>
+
+        <createTable tableName="enterprise">
+            <column name="id" type="int">
+                <constraints primaryKey="true" primaryKeyName="enterprise_id_pk"/>
+            </column>
+            <column name="post" type="varchar(100)"/>
+            <column name="num_fiscale" type="varchar(100)"/>
+            <column name="personnel_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="adresse_id" type="int"/>
+        </createTable>
+
+
+        <addAutoIncrement tableName="personnel" columnName="id" columnDataType="int" startWith="1" incrementBy="1"/>
+        <addAutoIncrement tableName="enterprise" columnName="id" columnDataType="int" startWith="1" incrementBy="1"/>
+
+        <addForeignKeyConstraint baseTableName="enterprise" baseColumnNames="personnel_id"
+                                 constraintName="enterprise_personnel_id_fk" referencedTableName="personnel"
+                                 referencedColumnNames="id"/>
+
+    </changeSet>
+
+</databaseChangeLog>
