@@ -1,5 +1,8 @@
 package com.example.societepersonnel.domain.adresse;
 
+import com.example.societepersonnel.core.exception.EntreprisePersonnelException;
+import com.example.societepersonnel.core.rest.Codes;
+import com.example.societepersonnel.core.utils.StringUtils;
 import com.example.societepersonnel.dto.AdresseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,12 @@ public class AdresseService {
         this.adresseMapper = adresseMapper;
     }
 
+    private Boolean validateAdresse(AdresseDto adresseDto) throws EntreprisePersonnelException {
+        if (StringUtils.isNullOrEmpty(adresseDto.getAdresse())) {
+            throw new EntreprisePersonnelException(Codes.ERR_ADRESS_NOT_VAlID);
+        } else return true;
+    }
+
     public AdresseDto createAdresse(AdresseDto adresseDto) {
         log.info("l'adresse est ajouter avec succussffly {}", adresseDto.getAdresse());
         Adresse adresse = adresseMapper.toEntity(adresseDto);
@@ -35,11 +44,13 @@ public class AdresseService {
     }
 
     public List<AdresseDto> listAdresseDto() {
+        log.info(" Les adresses sont les suivants");
         List<Adresse> adresses = adresseRepository.findAll();
         return adresseMapper.toDtos(adresses);
     }
 
     public boolean deleteAdresse(Long id) {
+        log.info("La supprission de l'adresse numero {}", id);
         Adresse adresse = searchAdresseById(id);
         if (adresse != null) {
             adresseRepository.delete(adresse);
@@ -54,22 +65,23 @@ public class AdresseService {
             return null;
         }
         return adresseRepository.findById(id).orElseThrow(() ->
-                new RuntimeException("L'id " + id + " n'existe pas dans la base de donnee"));
+                new RuntimeException("L'id " + id + " n'existe pas dans la BAse de donnée"));
     }
 
     public AdresseDto modifyAdresse(Long id, AdresseDto adresseDto) {
+        log.info("la modification commence {}, {} ", adresseDto.getAdresse(), id);
         Adresse adresseUpdate = adresseMapper.toEntity(adresseDto);
         Adresse adresseCurrent = searchAdresseById(id);
-        if (adresseUpdate.getAdresse() != null) {
+        if (!StringUtils.isNullOrEmpty(adresseUpdate.getAdresse())) {
             adresseCurrent.setAdresse(adresseUpdate.getAdresse());
         }
-        if (adresseUpdate.getCodePostal() != null) {
+        if (!StringUtils.isNullOrEmpty(adresseUpdate.getCodePostal())) {
             adresseCurrent.setCodePostal(adresseUpdate.getCodePostal());
         }
-        if (adresseUpdate.getPays() != null) {
+        if (!StringUtils.isNullOrEmpty(adresseUpdate.getPays())) {
             adresseCurrent.setPays(adresseUpdate.getPays());
         }
-        if (adresseUpdate.getVille() != null) {
+        if (!StringUtils.isNullOrEmpty(adresseUpdate.getPays())) {
             adresseCurrent.setVille(adresseUpdate.getVille());
         }
         if (adresseUpdate.getEnterprise() != null) {
