@@ -27,7 +27,8 @@ public class Enterprise {
 
     @OneToOne
     private Adresse adresse;
-    //@JsonProperty()
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @OneToMany(mappedBy = "enterprise", fetch = FetchType.LAZY)
     private List<Personnel> personnels;
 }

@@ -12,34 +12,40 @@ import java.util.List;
 public class AdresseController implements AdressesApiDelegate {
 
     private final AdresseService adresseService;
+    private final AdresseMapper adresseMapper;
 
-    public AdresseController(AdresseService adresseService) {
+    public AdresseController(AdresseService adresseService, AdresseMapper adresseMapper) {
         this.adresseService = adresseService;
+        this.adresseMapper = adresseMapper;
     }
 
     @Override
     public ResponseEntity<AdresseDto> createAdresse(AdresseDto adresseDto) {
-        AdresseDto adresseDtoSaved = adresseService.createAdresse(adresseDto);
-        return new ResponseEntity<>(adresseDtoSaved, HttpStatus.CREATED);
-    }
-
-    @Override
-    public ResponseEntity<Boolean> deleteAdresse(String id) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<AdresseDto> findAdresseById(String id) {
-        return null;
+        AdresseDto dto = adresseService.createAdresse(adresseDto);
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<List<AdresseDto>> findAdresses() {
-        return null;
+        List<AdresseDto> dtoList = adresseService.listAdresseDto();
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<AdresseDto> updateAdresse(String id, AdresseDto adresseDto) {
-        return null;
+    public ResponseEntity<AdresseDto> findAdresseById(Long id) {
+        AdresseDto adresseDto = adresseService.findAdresseById(id);
+        return new ResponseEntity<>(adresseDto, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Boolean> deleteAdresse(Long id) {
+        boolean dtoDelete = adresseService.deleteAdresse(id);
+        return ResponseEntity.ok(dtoDelete);
+    }
+
+    @Override
+    public ResponseEntity<AdresseDto> updateAdresse(Long id, AdresseDto adresseDto) {
+        AdresseDto dto = adresseService.modifyAdresse(id, adresseDto);
+        return ResponseEntity.ok(dto);
     }
 }

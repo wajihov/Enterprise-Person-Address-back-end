@@ -3,21 +3,19 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
-    <changeSet id="1" author="wajih">
+    <changeSet id="2" author="wajih">
         <createTable tableName="personnel">
-            <column name="id" type="int">
-                <constraints primaryKey="true" primaryKeyName="personnel_id_pk"/>
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="personnel_pk" />
             </column>
             <column name="name" type="varchar(100)"/>
             <column name="last_name" type="varchar(100)"/>
             <column name="post" type="varchar(100)"/>
-            <column name="entreprise_id" type="int"/>
             <column name="adresse_id" type="int"/>
+            <column name="enterprise_id" type="bigint">
+                <constraints foreignKeyName="fk_personnel_entreprise" referencedTableName="enterprise" referencedColumnNames="id"/>
+            </column>
         </createTable>
-        <addAutoIncrement tableName="personnel" columnName="id" columnDataType="int" startWith="1" incrementBy="1"/>
-        <addForeignKeyConstraint baseTableName="personnel" baseColumnNames="entreprise_id"
-                                 constraintName="enterprise_personnel_id_fk" referencedTableName="entreprise"
-                                 referencedColumnNames="id"/>
     </changeSet>
 
 </databaseChangeLog>

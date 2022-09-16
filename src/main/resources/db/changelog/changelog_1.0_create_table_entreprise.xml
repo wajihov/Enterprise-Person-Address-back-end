@@ -11,7 +11,12 @@
             <column name="post" type="varchar(100)"/>
             <column name="name" type="varchar(100)"/>
             <column name="num_fiscale" type="varchar(100)"/>
-            <column name="adresse_id" type="int"/>
+            <column name="personnel_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="adresse_id" type="int">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
         <addAutoIncrement tableName="enterprise" columnName="id" columnDataType="int" startWith="1" incrementBy="1"/>
     </changeSet>

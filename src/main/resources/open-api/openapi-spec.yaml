@@ -7,7 +7,7 @@ paths:
   /persons:
     get:
       tags:
-      - Person
+        - Person
       responses:
         '200':
           content:
@@ -28,7 +28,7 @@ paths:
               $ref: '#/components/schemas/PersonDto'
         required: true
       tags:
-      - Person
+        - Person
       responses:
         '201':
           content:
@@ -45,7 +45,7 @@ paths:
       contains a `GET` and `POST` operation to perform the list and create tasks, respectively.
     get:
       tags:
-      - Adresse
+        - Adresse
       responses:
         '200':
           content:
@@ -67,7 +67,7 @@ paths:
               $ref: '#/components/schemas/AdresseDto'
         required: true
       tags:
-      - Adresse
+        - Adresse
       responses:
         '201':
           content:
@@ -86,7 +86,7 @@ paths:
       tasks, respectively.
     get:
       tags:
-      - Adresse
+        - Adresse
       responses:
         '200':
           content:
@@ -112,7 +112,7 @@ paths:
               $ref: '#/components/schemas/AdresseDto'
         required: true
       tags:
-      - Adresse
+        - Adresse
       responses:
         '202':
           content:
@@ -125,7 +125,7 @@ paths:
       description: Updates an existing `adresseDto`.
     delete:
       tags:
-      - Adresse
+        - Adresse
       responses:
         '204':
           content:
@@ -137,12 +137,14 @@ paths:
       summary: Delete an adress
       description: Deletes an existing `adresseDto`.
     parameters:
-    - name: id
-      description: A unique identifier for a `adresseDto`.
-      schema:
-        type: string
-      in: path
-      required: true
+      -
+        name: id
+        description: A unique identifier for a `adresseDto`.
+        schema:
+          format: int64
+          type: integer
+        in: path
+        required: true
   '/persons/{id}':
     summary: Path used to manage a single personDto.
     description: >-
@@ -151,7 +153,7 @@ paths:
       tasks, respectively.
     get:
       tags:
-      - Person
+        - Person
       responses:
         '200':
           content:
@@ -177,7 +179,7 @@ paths:
               $ref: '#/components/schemas/PersonDto'
         required: true
       tags:
-      - Person
+        - Person
       responses:
         '202':
           content:
@@ -190,7 +192,7 @@ paths:
       description: Updates an existing `personDto`.
     delete:
       tags:
-      - Person
+        - Person
       responses:
         '204':
           content:
@@ -202,12 +204,14 @@ paths:
       summary: Delete a person by id
       description: Deletes an existing `personDto`.
     parameters:
-    - name: id
-      description: A unique identifier for a `personDto`.
-      schema:
-        type: string
-      in: path
-      required: true
+      -
+        name: id
+        description: A unique identifier for a `personDto`.
+        schema:
+          format: int64
+          type: integer
+        in: path
+        required: true
   /entreprises:
     summary: Path used to manage the list of enterprisedtos.
     description: >-
@@ -215,7 +219,7 @@ paths:
       contains a `GET` and `POST` operation to perform the list and create tasks, respectively.
     get:
       tags:
-      - Entreprise
+        - Entreprise
       responses:
         '200':
           content:
@@ -237,7 +241,7 @@ paths:
               $ref: '#/components/schemas/EntrepriseDto'
         required: true
       tags:
-      - Entreprise
+        - Entreprise
       responses:
         '201':
           content:
@@ -256,7 +260,7 @@ paths:
       delete tasks, respectively.
     get:
       tags:
-      - Entreprise
+        - Entreprise
       responses:
         '200':
           content:
@@ -282,7 +286,7 @@ paths:
               $ref: '#/components/schemas/EntrepriseDto'
         required: true
       tags:
-      - Entreprise
+        - Entreprise
       responses:
         '202':
           content:
@@ -295,7 +299,7 @@ paths:
       description: Updates an existing `enterpriseDto`.
     delete:
       tags:
-      - Entreprise
+        - Entreprise
       responses:
         '204':
           content:
@@ -307,18 +311,20 @@ paths:
       summary: Delete an enterprise
       description: Deletes an existing `enterpriseDto`.
     parameters:
-    - name: id
-      description: A unique identifier for a `enterpriseDto`.
-      schema:
-        type: string
-      in: path
-      required: true
+      -
+        name: id
+        description: A unique identifier for a `enterpriseDto`.
+        schema:
+          format: int64
+          type: integer
+        in: path
+        required: true
 components:
   schemas:
     EntrepriseDto:
       description: Entreprise Dto
       required:
-      - name
+        - name
       type: object
       properties:
         id:
@@ -331,10 +337,15 @@ components:
         adresse_id:
           format: int64
           type: integer
+        personnels:
+          description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonDto'
     AdresseDto:
       description: Adresse Dto
       required:
-      - adresse
+        - adresse
       type: object
       properties:
         id:
@@ -351,7 +362,7 @@ components:
     PersonDto:
       description: Person Dto
       required:
-      - name
+        - name
       type: object
       properties:
         id:
@@ -362,6 +373,11 @@ components:
         lastName:
           type: string
         post:
+          enum:
+            - PRESIDENT
+            - DRH
+            - ADMIN
+            - EMPLOYEE
           type: string
         enterprise_id:
           format: int64

@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    url: jdbc:mysql://localhost:3306/personnel-entreprise
+    url: jdbc:mysql://localhost:3306/personnel-entreprise?createDatabaseIfNotExist=true&useSSL=false
     password: ''
   h2:
     console:

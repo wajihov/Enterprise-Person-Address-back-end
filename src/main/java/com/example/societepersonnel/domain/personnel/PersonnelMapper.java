@@ -21,12 +21,12 @@ public class PersonnelMapper {
                 .name(personnel.getName())
                 .lastName(personnel.getLastName())
                 .adresseId(personnel.getAdresse().getId())
-                .post(personnel.getPost())
+                .post(PersonDto.PostEnum.valueOf(personnel.getPost().toString()))
                 .enterpriseId(personnel.getEnterprise().getId())
                 .build();
     }
 
-    public Personnel toEntity(Enterprise enterprise, PersonDto personnelDto, Adresse adresse) {
+    public Personnel toEntity(PersonDto personnelDto, Adresse adresse, Enterprise enterprise) {
         if (personnelDto == null) {
             return null;
         }
@@ -35,14 +35,14 @@ public class PersonnelMapper {
                 .name(personnelDto.getName())
                 .lastName(personnelDto.getLastName())
                 .adresse(adresse)
-                .post(personnelDto.getPost())
+                .post(Post.valueOf(personnelDto.getPost().getValue()))
                 .enterprise(enterprise)
                 .build();
         return personnel;
     }
 
-    public List<PersonDto> toDtos(List<Personnel> personnelList) {
-        return personnelList.stream().map(this::toDto).collect(Collectors.toList());
+    public List<PersonDto> toDtos(List<Personnel> personnel) {
+        return personnel.stream().map(this::toDto).collect(Collectors.toList());
     }
 
 
