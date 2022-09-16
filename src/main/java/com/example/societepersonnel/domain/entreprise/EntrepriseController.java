@@ -2,6 +2,7 @@ package com.example.societepersonnel.domain.entreprise;
 
 import com.example.societepersonnel.EntreprisesApiDelegate;
 import com.example.societepersonnel.dto.EntrepriseDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +21,8 @@ public class EntrepriseController implements EntreprisesApiDelegate {
 
     @Override
     public ResponseEntity<EntrepriseDto> createEnterprise(EntrepriseDto entrepriseDto) {
-        return EntreprisesApiDelegate.super.createEnterprise(entrepriseDto);
+        EntrepriseDto dto = entrepriseService.createEntreprise(entrepriseDto);
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
     @Override

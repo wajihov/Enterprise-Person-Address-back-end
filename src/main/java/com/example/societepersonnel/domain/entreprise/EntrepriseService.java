@@ -1,6 +1,5 @@
 package com.example.societepersonnel.domain.entreprise;
 
-import com.example.societepersonnel.domain.adresse.Adresse;
 import com.example.societepersonnel.dto.EntrepriseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,9 +16,10 @@ public class EntrepriseService {
         this.entrepriseRepository = entrepriseRepository;
     }
 
-    public EntrepriseDto createEntreprise(EntrepriseDto entrepriseDto, Adresse adresse) {
+    public EntrepriseDto createEntreprise(EntrepriseDto entrepriseDto) {
         log.info("l'ajout de l'entreprise {}", entrepriseDto.getName());
-
-        return null;
+        Enterprise enterprise = entrepriseMapper.toEntity(entrepriseDto);
+        enterprise = entrepriseRepository.save(enterprise);
+        return entrepriseMapper.toDto(enterprise);
     }
 }

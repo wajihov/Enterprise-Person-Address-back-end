@@ -1,6 +1,5 @@
 package com.example.societepersonnel.domain.entreprise;
 
-import com.example.societepersonnel.domain.adresse.Adresse;
 import com.example.societepersonnel.domain.personnel.PersonnelMapper;
 import com.example.societepersonnel.dto.EntrepriseDto;
 import org.springframework.stereotype.Service;
@@ -17,14 +16,13 @@ public class EntrepriseMapper {
         this.personnelMapper = personnelMapper;
     }
 
-    public Enterprise toEntity(EntrepriseDto enterpriseDto, Adresse adresse) {
+    public Enterprise toEntity(EntrepriseDto enterpriseDto) {
         if (enterpriseDto == null) {
             return null;
         }
         return Enterprise.builder()
                 .id(enterpriseDto.getId())
                 .name(enterpriseDto.getName())
-                .adresse(adresse)
                 .numFiscale(enterpriseDto.getNumFiscale())
                 .build();
     }
