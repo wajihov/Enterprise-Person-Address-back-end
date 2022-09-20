@@ -26,22 +26,25 @@ public class EntrepriseController implements EntreprisesApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Boolean> deleteEnterprise(Long id) {
-        return EntreprisesApiDelegate.super.deleteEnterprise(id);
+    public ResponseEntity<Void> deleteEnterprise(Long id) {
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<EntrepriseDto> findEnterpriseById(Long id) {
-        return EntreprisesApiDelegate.super.findEnterpriseById(id);
+        EntrepriseDto dto = entrepriseService.findEntrepriseById(id);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<List<EntrepriseDto>> findEnterprises() {
-        return EntreprisesApiDelegate.super.findEnterprises();
+        List<EntrepriseDto> entreprises = entrepriseService.findAllEntreprise();
+        return ResponseEntity.ok(entreprises);
     }
 
     @Override
     public ResponseEntity<EntrepriseDto> updateEnterprise(Long id, EntrepriseDto entrepriseDto) {
-        return EntreprisesApiDelegate.super.updateEnterprise(id, entrepriseDto);
+        EntrepriseDto dto = entrepriseService.updateEntreprise(id, entrepriseDto);
+        return ResponseEntity.ok(dto);
     }
 }

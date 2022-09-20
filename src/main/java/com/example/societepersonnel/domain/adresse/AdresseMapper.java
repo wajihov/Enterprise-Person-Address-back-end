@@ -1,5 +1,6 @@
 package com.example.societepersonnel.domain.adresse;
 
+import com.example.societepersonnel.core.utils.CollectionUtils;
 import com.example.societepersonnel.dto.AdresseDto;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,9 @@ public class AdresseMapper {
 
 
     public List<AdresseDto> toDtos(List<Adresse> adresses) {
+        if (CollectionUtils.isNullOrEmpty(adresses)) {
+            return null;
+        }
         return adresses.stream().map(this::toDto).collect(Collectors.toList());
     }
 

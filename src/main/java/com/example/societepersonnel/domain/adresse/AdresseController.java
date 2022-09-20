@@ -38,9 +38,9 @@ public class AdresseController implements AdressesApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Boolean> deleteAdresse(Long id) {
-        boolean dtoDelete = adresseService.deleteAdresse(id);
-        return ResponseEntity.ok(dtoDelete);
+    public ResponseEntity<Void> deleteAdresse(Long id) {
+        adresseService.deleteAdresse(id);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @Override

@@ -6,7 +6,7 @@
     <changeSet id="3" author="wajih">
 
         <createTable tableName="adresse">
-            <column name="id" type="int">
+            <column name="id" type="bigint">
                 <constraints primaryKey="true" primaryKeyName="adresse_id_pk"/>
             </column>
             <column name="adresse" type="varchar(100)"/>
@@ -15,12 +15,20 @@
             <column name="code_postal" type="varchar(100)"/>
         </createTable>
         <addAutoIncrement tableName="adresse" columnName="id" columnDataType="int" incrementBy="1" startWith="1"/>
-        <addForeignKeyConstraint baseTableName="enterprise" baseColumnNames="adresse_id"
+
+        <addForeignKeyConstraint baseTableName="entreprise" baseColumnNames="adresse_id"
                                  constraintName="enterprise_adresse_id_fk" referencedTableName="adresse"
                                  referencedColumnNames="id"/>
+
         <addForeignKeyConstraint baseTableName="personnel" baseColumnNames="adresse_id"
                                  constraintName="personnel_adresse_id_fk" referencedTableName="adresse"
                                  referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="personnel" baseColumnNames="entreprise_id"
+                                 constraintName="personnel_entreprise_id_fk"
+                                 referencedTableName="entreprise" referencedColumnNames="id"/>
+
+
     </changeSet>
 
 </databaseChangeLog>

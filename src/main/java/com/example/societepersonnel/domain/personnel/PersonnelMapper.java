@@ -1,7 +1,8 @@
 package com.example.societepersonnel.domain.personnel;
 
+import com.example.societepersonnel.core.utils.CollectionUtils;
 import com.example.societepersonnel.domain.adresse.Adresse;
-import com.example.societepersonnel.domain.entreprise.Enterprise;
+import com.example.societepersonnel.domain.entreprise.Entreprise;
 import com.example.societepersonnel.dto.PersonDto;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +23,11 @@ public class PersonnelMapper {
                 .lastName(personnel.getLastName())
                 .adresseId(personnel.getAdresse().getId())
                 .post(PersonDto.PostEnum.valueOf(personnel.getPost().toString()))
-                .enterpriseId(personnel.getEnterprise().getId())
+                .enterpriseId(personnel.getEntreprise().getId())
                 .build();
     }
 
-    public Personnel toEntity(PersonDto personnelDto, Adresse adresse, Enterprise enterprise) {
+    public Personnel toEntity(PersonDto personnelDto, Adresse adresse, Entreprise entreprise) {
         if (personnelDto == null) {
             return null;
         }
@@ -36,13 +37,16 @@ public class PersonnelMapper {
                 .lastName(personnelDto.getLastName())
                 .adresse(adresse)
                 .post(Post.valueOf(personnelDto.getPost().getValue()))
-                .enterprise(enterprise)
+                .entreprise(entreprise)
                 .build();
         return personnel;
     }
 
-    public List<PersonDto> toDtos(List<Personnel> personnel) {
-        return personnel.stream().map(this::toDto).collect(Collectors.toList());
+    public List<PersonDto> toDtos(List<Personnel> personnels) {
+        if (CollectionUtils.isNullOrEmpty(personnels)) {
+            return null;
+        }
+        return personnels.stream().map(this::toDto).collect(Collectors.toList());
     }
 
 

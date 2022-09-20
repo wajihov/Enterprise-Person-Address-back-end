@@ -1,7 +1,7 @@
 package com.example.societepersonnel.domain.personnel;
 
 import com.example.societepersonnel.domain.adresse.Adresse;
-import com.example.societepersonnel.domain.entreprise.Enterprise;
+import com.example.societepersonnel.domain.entreprise.Entreprise;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,6 +28,6 @@ public class Personnel {
     private Adresse adresse;
 
     @ManyToOne
-    private Enterprise enterprise;
+    private Entreprise entreprise;
 
 }

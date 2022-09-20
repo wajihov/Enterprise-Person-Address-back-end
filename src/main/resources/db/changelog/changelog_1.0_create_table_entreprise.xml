@@ -4,20 +4,17 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
     <changeSet id="1" author="wajih">
-        <createTable tableName="enterprise">
-            <column name="id" type="int">
+        <createTable tableName="entreprise">
+            <column name="id" type="bigint" autoIncrement="true" startWith="1">
                 <constraints primaryKey="true" primaryKeyName="enterprise_id_pk"/>
             </column>
             <column name="post" type="varchar(100)"/>
             <column name="name" type="varchar(100)"/>
             <column name="num_fiscale" type="varchar(100)"/>
-            <column name="personnel_id" type="int">
-                <constraints nullable="false"/>
-            </column>
-            <column name="adresse_id" type="int">
-                <constraints nullable="false"/>
+            <column name="adresse_id" type="bigint">
+                <constraints nullable="true"/>
             </column>
         </createTable>
-        <addAutoIncrement tableName="enterprise" columnName="id" columnDataType="int" startWith="1" incrementBy="1"/>
+
     </changeSet>
 </databaseChangeLog>

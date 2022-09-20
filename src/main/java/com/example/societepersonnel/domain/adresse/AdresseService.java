@@ -23,14 +23,8 @@ public class AdresseService {
         this.adresseMapper = adresseMapper;
     }
 
-    private Boolean validateAdresse(AdresseDto adresseDto) throws EntreprisePersonnelException {
-        if (StringUtils.isNullOrEmpty(adresseDto.getAdresse())) {
-            throw new EntreprisePersonnelException(Codes.ERR_ADRESS_NOT_VAlID);
-        } else return true;
-    }
-
     public AdresseDto createAdresse(AdresseDto adresseDto) {
-        log.info("l'adresse est ajouter avec succussffly {}", adresseDto.getAdresse());
+        log.info("l'adresse est ajouté avec succès {}", adresseDto.getAdresse());
         Adresse adresse = adresseMapper.toEntity(adresseDto);
         adresse = adresseRepository.save(adresse);
         return adresseMapper.toDto(adresse);
@@ -44,28 +38,25 @@ public class AdresseService {
     }
 
     public List<AdresseDto> listAdresseDto() {
-        log.info(" Les adresses sont les suivants");
         List<Adresse> adresses = adresseRepository.findAll();
+        log.info("Recherche {} adresses ", adresses.size());
         return adresseMapper.toDtos(adresses);
     }
 
-    public boolean deleteAdresse(Long id) {
-        log.info("La supprission de l'adresse numero {}", id);
-        Adresse adresse = searchAdresseById(id);
-        if (adresse != null) {
-            adresseRepository.delete(adresse);
-            return true;
-        } else
-            return false;
+    public void deleteAdresse(Long id) {
+        if (searchAdresseById(id) != null) ;
+        {
+            log.info("La suppression de l'adresse numero {}", id);
+            adresseRepository.deleteById(id);
+        }
     }
 
     private Adresse searchAdresseById(Long id) {
         if (id == null) {
-            log.error("l'id est null");
             return null;
         }
         return adresseRepository.findById(id).orElseThrow(() ->
-                new RuntimeException("L'id " + id + " n'existe pas dans la BAse de donnée"));
+                new EntreprisePersonnelException(Codes.ERR_ADRESS_NOT_FOUND));
     }
 
     public AdresseDto modifyAdresse(Long id, AdresseDto adresseDto) {
@@ -84,8 +75,8 @@ public class AdresseService {
         if (!StringUtils.isNullOrEmpty(adresseUpdate.getPays())) {
             adresseCurrent.setVille(adresseUpdate.getVille());
         }
-        if (adresseUpdate.getEnterprise() != null) {
-            adresseCurrent.setEnterprise(adresseUpdate.getEnterprise());
+        if (adresseUpdate.getEntreprise() != null) {
+            adresseCurrent.setEntreprise(adresseUpdate.getEntreprise());
         }
         if (adresseUpdate.getPersonnel() != null) {
             adresseCurrent.setPersonnel(adresseUpdate.getPersonnel());

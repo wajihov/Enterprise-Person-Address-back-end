@@ -93,13 +93,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AdresseDto'
-          description: Successful response - returns a single `adresseDto`.
+          description: Successful response - returns a single `adresse`.
         '404':
           content:
             application/json:
               schema:
                 type: string
-          description: Successful response - returns a single `adresseDto`.
+          description: Not Found Adresse
       operationId: findAdresseById
       summary: Get an adress with id
       description: Gets the details of a single instance of a `adresseDto`.
@@ -128,17 +128,14 @@ paths:
         - Adresse
       responses:
         '204':
-          content:
-            application/json:
-              schema:
-                type: boolean
-          description: Successful response.
+          description: The Adress has been successfully deleted
+        '404':
+          description: The Adress not found.
       operationId: deleteAdresse
       summary: Delete an adress
       description: Deletes an existing `adresseDto`.
     parameters:
-      -
-        name: id
+      - name: id
         description: A unique identifier for a `adresseDto`.
         schema:
           format: int64
@@ -160,13 +157,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PersonDto'
-          description: Successful response - returns a single `personDto`.
+          description: Successful response - returns a single `person`.
         '404':
           content:
             application/json:
               schema:
                 type: string
-          description: Successful response - returns a single `personDto`.
+          description: Person not found
       operationId: findPersonById
       summary: Get a person by id
       description: Gets the details of a single instance of a `personDto`.
@@ -195,17 +192,14 @@ paths:
         - Person
       responses:
         '204':
-          content:
-            application/json:
-              schema:
-                type: boolean
-          description: Successful response.
+          description: The person has been successfully deleted
+        '404':
+          description: The person not found.
       operationId: deletePerson
       summary: Delete a person by id
       description: Deletes an existing `personDto`.
     parameters:
-      -
-        name: id
+      - name: id
         description: A unique identifier for a `personDto`.
         schema:
           format: int64
@@ -273,7 +267,7 @@ paths:
             application/json:
               schema:
                 type: string
-          description: Successful response - returns a single `enterpriseDto`.
+          description: Not Found Entreprise
       operationId: findEnterpriseById
       summary: Get an enterprise
       description: Gets the details of a single instance of a `enterpriseDto`.
@@ -301,18 +295,15 @@ paths:
       tags:
         - Entreprise
       responses:
-        '204':
-          content:
-            application/json:
-              schema:
-                type: boolean
-          description: Successful response.
+        '200':
+          description: The Entreprise has been successfully deleted.
+        '404':
+          description: The Entreprise not found.
       operationId: deleteEnterprise
       summary: Delete an enterprise
       description: Deletes an existing `enterpriseDto`.
     parameters:
-      -
-        name: id
+      - name: id
         description: A unique identifier for a `enterpriseDto`.
         schema:
           format: int64
@@ -321,31 +312,8 @@ paths:
         required: true
 components:
   schemas:
-    EntrepriseDto:
-      description: Entreprise Dto
-      required:
-        - name
-      type: object
-      properties:
-        id:
-          format: int64
-          type: integer
-        name:
-          type: string
-        num_fiscale:
-          type: string
-        adresse_id:
-          format: int64
-          type: integer
-        personnels:
-          description: ''
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonDto'
     AdresseDto:
       description: Adresse Dto
-      required:
-        - adresse
       type: object
       properties:
         id:
@@ -361,8 +329,6 @@ components:
           type: string
     PersonDto:
       description: Person Dto
-      required:
-        - name
       type: object
       properties:
         id:
@@ -385,3 +351,21 @@ components:
         adresse_id:
           format: int64
           type: integer
+    EntrepriseDto:
+      description: Entreprise Dto
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        name:
+          type: string
+        num_fiscale:
+          type: string
+        adresse_id:
+          format: int64
+          type: integer
+        personnels:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonDto'

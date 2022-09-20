@@ -1,5 +1,6 @@
 package com.example.societepersonnel.domain.entreprise;
 
+import com.example.societepersonnel.core.utils.CollectionUtils;
 import com.example.societepersonnel.domain.personnel.PersonnelMapper;
 import com.example.societepersonnel.dto.EntrepriseDto;
 import org.springframework.stereotype.Service;
@@ -16,30 +17,36 @@ public class EntrepriseMapper {
         this.personnelMapper = personnelMapper;
     }
 
-    public Enterprise toEntity(EntrepriseDto enterpriseDto) {
+    public Entreprise toEntity(EntrepriseDto enterpriseDto) {
         if (enterpriseDto == null) {
             return null;
         }
-        return Enterprise.builder()
+        return Entreprise.builder()
                 .id(enterpriseDto.getId())
                 .name(enterpriseDto.getName())
                 .numFiscale(enterpriseDto.getNumFiscale())
+                //.adresse(enterpriseDto.getAdresseId())
+                //.personnels(enterpriseDto.getPersonnels())
                 .build();
     }
 
-    public EntrepriseDto toDto(Enterprise enterprise) {
-        if (enterprise == null) {
+    public EntrepriseDto toDto(Entreprise entreprise) {
+        if (entreprise == null) {
             return null;
         }
         return EntrepriseDto.builder()
-                .id(enterprise.getId())
-                .name(enterprise.getName())
-                .adresseId(enterprise.getAdresse().getId())
-                .personnels(personnelMapper.toDtos(enterprise.getPersonnels()))
+                .id(entreprise.getId())
+                .name(entreprise.getName())
+                .numFiscale(entreprise.getNumFiscale())
+                .adresseId(entreprise.getAdresse().getId())
+                .personnels(personnelMapper.toDtos(entreprise.getPersonnels()))
                 .build();
     }
 
-    public List<EntrepriseDto> toDtos(List<Enterprise> enterprises) {
+    public List<EntrepriseDto> toDtos(List<Entreprise> enterprises) {
+        if (CollectionUtils.isNullOrEmpty(enterprises)) {
+            return null;
+        }
         return enterprises.stream().map(this::toDto).collect(Collectors.toList());
     }
 

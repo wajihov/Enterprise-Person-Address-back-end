@@ -4,7 +4,7 @@ import com.example.societepersonnel.core.rest.Codes;
 import lombok.Getter;
 
 @Getter
-public class EntreprisePersonnelException extends Exception {
+public class EntreprisePersonnelException extends RuntimeException {
 
     private Codes codes;
 

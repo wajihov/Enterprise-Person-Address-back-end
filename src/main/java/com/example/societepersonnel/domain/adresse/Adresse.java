@@ -1,6 +1,6 @@
 package com.example.societepersonnel.domain.adresse;
 
-import com.example.societepersonnel.domain.entreprise.Enterprise;
+import com.example.societepersonnel.domain.entreprise.Entreprise;
 import com.example.societepersonnel.domain.personnel.Personnel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,8 +24,9 @@ public class Adresse {
     private String pays;
     private String codePostal;
 
-    @OneToOne(mappedBy = "adresse")
+    @OneToOne(mappedBy = "adresse", cascade = CascadeType.ALL)
     private Personnel personnel;
-    @OneToOne(mappedBy = "adresse")
-    private Enterprise enterprise;
+    //@OneToOne(mappedBy = "adresse")
+    @OneToOne(mappedBy = "adresse", cascade = CascadeType.ALL)
+    private Entreprise entreprise;
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Enterprise {
+public class Entreprise {
 
 
     @Id
@@ -28,7 +28,7 @@ public class Enterprise {
     @OneToOne
     private Adresse adresse;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @OneToMany(mappedBy = "enterprise", fetch = FetchType.LAZY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "entreprise", fetch = FetchType.LAZY)
     private List<Personnel> personnels;
 }
