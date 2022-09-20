@@ -1,8 +1,6 @@
 package com.example.societepersonnel.domain.personnel;
 
 import com.example.societepersonnel.core.utils.CollectionUtils;
-import com.example.societepersonnel.domain.adresse.Adresse;
-import com.example.societepersonnel.domain.entreprise.Entreprise;
 import com.example.societepersonnel.dto.PersonDto;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +9,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class PersonnelMapper {
-
 
     public PersonDto toDto(Personnel personnel) {
         if (personnel == null) {
@@ -23,11 +20,11 @@ public class PersonnelMapper {
                 .lastName(personnel.getLastName())
                 .adresseId(personnel.getAdresse().getId())
                 .post(PersonDto.PostEnum.valueOf(personnel.getPost().toString()))
-                .enterpriseId(personnel.getEntreprise().getId())
+                //.enterpriseId(personnel.getEntreprise().getId())
                 .build();
     }
 
-    public Personnel toEntity(PersonDto personnelDto, Adresse adresse, Entreprise entreprise) {
+    public Personnel toEntity(PersonDto personnelDto) {
         if (personnelDto == null) {
             return null;
         }
@@ -35,9 +32,7 @@ public class PersonnelMapper {
                 .id(personnelDto.getId())
                 .name(personnelDto.getName())
                 .lastName(personnelDto.getLastName())
-                .adresse(adresse)
                 .post(Post.valueOf(personnelDto.getPost().getValue()))
-                .entreprise(entreprise)
                 .build();
         return personnel;
     }

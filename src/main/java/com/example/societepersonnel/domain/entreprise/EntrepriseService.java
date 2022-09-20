@@ -2,6 +2,7 @@ package com.example.societepersonnel.domain.entreprise;
 
 import com.example.societepersonnel.core.exception.EntreprisePersonnelException;
 import com.example.societepersonnel.core.rest.Codes;
+import com.example.societepersonnel.core.utils.StringUtils;
 import com.example.societepersonnel.domain.adresse.Adresse;
 import com.example.societepersonnel.domain.adresse.AdresseMapper;
 import com.example.societepersonnel.domain.adresse.AdresseService;
@@ -28,12 +29,17 @@ public class EntrepriseService {
         this.adresseService = adresseService;
     }
 
+    private Adresse AddAdresseEntreprise(Long id_adresse) {
+        AdresseDto adresseDto = adresseService.findAdresseById(id_adresse);
+        Adresse adresse = adresseMapper.toEntity(adresseDto);
+        return adresse;
+    }
+
     public EntrepriseDto createEntreprise(EntrepriseDto entrepriseDto) {
         log.info("l'ajout de l'entreprise {}", entrepriseDto.getName());
         Entreprise entreprise = entrepriseMapper.toEntity(entrepriseDto);
-        Long id_adresse=entrepriseDto.getAdresseId();
-        AdresseDto adresseDto= adresseService.findAdresseById(id_adresse);
-        Adresse adresse= adresseMapper.toEntity(adresseDto);
+        Long id_adresse = entrepriseDto.getAdresseId();
+        Adresse adresse = AddAdresseEntreprise(id_adresse);
         entreprise.setAdresse(adresse);
         entreprise = entrepriseRepository.save(entreprise);
         return entrepriseMapper.toDto(entreprise);
@@ -57,18 +63,34 @@ public class EntrepriseService {
     }
 
     public EntrepriseDto updateEntreprise(Long id, EntrepriseDto entrepriseDto) {
-        searchEntrepriseById(id);
-        Entreprise entreprise = entrepriseMapper.toEntity(entrepriseDto);
-        entreprise.setId(id);
-        entreprise = entrepriseRepository.save(entreprise);
+        Entreprise currentEntreprise = searchEntrepriseById(id);
+        Entreprise entrepriseUpdate = entrepriseMapper.toEntity(entrepriseDto);
+        Long id_adresse = entrepriseDto.getAdresseId();
+        if (!StringUtils.isNullOrEmpty(entrepriseUpdate.getName())) {
+            currentEntreprise.setName(entrepriseUpdate.getName());
+        }
+        if (!StringUtils.isNullOrEmpty(entrepriseUpdate.getNumFiscale())) {
+            currentEntreprise.setNumFiscale(entrepriseUpdate.getNumFiscale());
+        }
+        if (id_adresse != null) {
+            Adresse adresse = AddAdresseEntreprise(id_adresse);
+            currentEntreprise.setAdresse(adresse);
+        }
+        if (entrepriseUpdate.getPersonnels() != null) {
+            currentEntreprise.setPersonnels(entrepriseUpdate.getPersonnels());
+        }
+        currentEntreprise = entrepriseRepository.save(currentEntreprise);
         log.info("L'entreprise est modifié avec succès {}", entrepriseDto.getName());
-        return entrepriseMapper.toDto(entreprise);
+        return entrepriseMapper.toDto(currentEntreprise);
     }
 
     public void deleteEntreprise(Long id) {
-        searchEntrepriseById(id);
-        log.info("L'entreprise est supprimé avec succès avec l'id {}", id);
-        entrepriseRepository.deleteById(id);
+        if (searchEntrepriseById(id) != null) {
+            log.info("L'entreprise est supprimé avec succès avec l'id {}", id);
+            Entreprise entreprise = searchEntrepriseById(id);
+            entrepriseRepository.delete(entreprise);
+            //entrepriseRepository.deleteById(id);
+        }
     }
 
 }

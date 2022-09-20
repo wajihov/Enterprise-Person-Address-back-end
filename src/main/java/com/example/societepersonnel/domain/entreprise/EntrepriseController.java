@@ -27,6 +27,7 @@ public class EntrepriseController implements EntreprisesApiDelegate {
 
     @Override
     public ResponseEntity<Void> deleteEnterprise(Long id) {
+        entrepriseService.deleteEntreprise(id);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 

@@ -26,7 +26,7 @@ public class Adresse {
 
     @OneToOne(mappedBy = "adresse", cascade = CascadeType.ALL)
     private Personnel personnel;
-    //@OneToOne(mappedBy = "adresse")
+
     @OneToOne(mappedBy = "adresse", cascade = CascadeType.ALL)
     private Entreprise entreprise;
 }

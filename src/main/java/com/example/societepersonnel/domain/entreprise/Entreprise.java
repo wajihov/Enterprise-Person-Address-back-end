@@ -26,6 +26,7 @@ public class Entreprise {
     private String numFiscale;
 
     @OneToOne
+    @JoinColumn(name = "adresse_id")
     private Adresse adresse;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
