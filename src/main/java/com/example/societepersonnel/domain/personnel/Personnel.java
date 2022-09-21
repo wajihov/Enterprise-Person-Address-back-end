@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -24,10 +26,14 @@ public class Personnel {
     @Enumerated(EnumType.STRING)
     private Post post;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "adresse_id", nullable = false)
     private Adresse adresse;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "entreprise_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Entreprise entreprise;
 
 }

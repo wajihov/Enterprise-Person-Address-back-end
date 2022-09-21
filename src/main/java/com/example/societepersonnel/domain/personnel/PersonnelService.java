@@ -15,8 +15,10 @@ import com.example.societepersonnel.dto.PersonDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
+@Transactional
 @Service
 @Slf4j
 public class PersonnelService {
@@ -106,10 +108,10 @@ public class PersonnelService {
     }
 
     public void deleteEntreprise(Long id) {
-        if (searchPersonById(id) != null) {
-            log.info("la supprission de la personnne {} est effectué avec succès ", id);
-            personnelRepository.deleteById(id);
-        }
+        searchPersonById(id);
+        log.info("la supprission de la personnne {} est effectué avec succès ", id);
+        personnelRepository.deleteById(id);
+
     }
 
 }

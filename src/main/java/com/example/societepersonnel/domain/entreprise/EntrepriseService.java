@@ -11,8 +11,10 @@ import com.example.societepersonnel.dto.EntrepriseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
+@Transactional
 @Service
 @Slf4j
 public class EntrepriseService {
@@ -85,12 +87,9 @@ public class EntrepriseService {
     }
 
     public void deleteEntreprise(Long id) {
-        if (searchEntrepriseById(id) != null) {
-            log.info("L'entreprise est supprimé avec succès avec l'id {}", id);
-            Entreprise entreprise = searchEntrepriseById(id);
-            entrepriseRepository.delete(entreprise);
-            //entrepriseRepository.deleteById(id);
-        }
+        searchEntrepriseById(id);
+        entrepriseRepository.deleteById(id);
+        log.info("L'entreprise est supprimé avec succès avec l'id {}", id);
     }
 
 }

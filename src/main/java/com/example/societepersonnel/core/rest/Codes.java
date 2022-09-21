@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 public enum Codes {
 
     ERR_ADRESS_NOT_FOUND("Adresse Not Found", HttpStatus.NOT_FOUND),
-    ERR_ADRESS_NOT_VAlID("Adresse Not Valid : Il faut ajouter l'adresse ", HttpStatus.NOT_ACCEPTABLE),
+    ERR_ADRESS_NOT_VAlID("Adresse Not Valid", HttpStatus.NOT_ACCEPTABLE),
     ERR_ADRESS_NOT_EXIST("Adresse Not Exist", HttpStatus.NOT_EXTENDED),
 
     ERR_ENTREPRESE_NOT_FOUND("Entreprise Not Found", HttpStatus.NOT_FOUND),

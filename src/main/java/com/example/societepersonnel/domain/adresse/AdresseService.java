@@ -72,7 +72,7 @@ public class AdresseService {
         if (!StringUtils.isNullOrEmpty(adresseUpdate.getPays())) {
             adresseCurrent.setPays(adresseUpdate.getPays());
         }
-        if (!StringUtils.isNullOrEmpty(adresseUpdate.getPays())) {
+        if (!StringUtils.isNullOrEmpty(adresseUpdate.getVille())) {
             adresseCurrent.setVille(adresseUpdate.getVille());
         }
         if (adresseUpdate.getEntreprise() != null) {

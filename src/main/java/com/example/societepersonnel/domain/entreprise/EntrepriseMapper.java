@@ -1,6 +1,7 @@
 package com.example.societepersonnel.domain.entreprise;
 
 import com.example.societepersonnel.core.utils.CollectionUtils;
+import com.example.societepersonnel.domain.adresse.AdresseMapper;
 import com.example.societepersonnel.domain.personnel.PersonnelMapper;
 import com.example.societepersonnel.dto.EntrepriseDto;
 import org.springframework.stereotype.Service;
@@ -12,9 +13,11 @@ import java.util.stream.Collectors;
 public class EntrepriseMapper {
 
     private final PersonnelMapper personnelMapper;
+    private final AdresseMapper adresseMapper;
 
-    public EntrepriseMapper(PersonnelMapper personnelMapper) {
+    public EntrepriseMapper(PersonnelMapper personnelMapper, AdresseMapper adresseMapper) {
         this.personnelMapper = personnelMapper;
+        this.adresseMapper = adresseMapper;
     }
 
     public Entreprise toEntity(EntrepriseDto enterpriseDto) {
@@ -25,8 +28,8 @@ public class EntrepriseMapper {
                 .id(enterpriseDto.getId())
                 .name(enterpriseDto.getName())
                 .numFiscale(enterpriseDto.getNumFiscale())
-                //.adresse(enterpriseDto.getAdresseId())
-                //.personnels(enterpriseDto.getPersonnels())
+                //.adresse(adresseMapper.toEntity( enterpriseDto.getAdresseId()))
+                //.personnels(personnelMapper.toEntity( enterpriseDto.getPersonnels()))
                 .build();
     }
 

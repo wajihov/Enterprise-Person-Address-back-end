@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 @Service
 public class AdresseMapper {
 
-
     public Adresse toEntity(AdresseDto adresseDto) {
         if (adresseDto == null) {
             return null;
@@ -36,7 +35,6 @@ public class AdresseMapper {
                 .codePostal(adresse.getCodePostal())
                 .build();
     }
-
 
     public List<AdresseDto> toDtos(List<Adresse> adresses) {
         if (CollectionUtils.isNullOrEmpty(adresses)) {

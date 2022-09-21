@@ -24,9 +24,9 @@ public class Adresse {
     private String pays;
     private String codePostal;
 
-    @OneToOne(mappedBy = "adresse", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "adresse")
     private Personnel personnel;
 
-    @OneToOne(mappedBy = "adresse", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "adresse")
     private Entreprise entreprise;
 }
