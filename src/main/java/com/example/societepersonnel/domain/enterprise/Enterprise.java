@@ -1,7 +1,7 @@
-package com.example.societepersonnel.domain.entreprise;
+package com.example.societepersonnel.domain.enterprise;
 
-import com.example.societepersonnel.domain.adresse.Adresse;
-import com.example.societepersonnel.domain.personnel.Personnel;
+import com.example.societepersonnel.domain.address.Address;
+import com.example.societepersonnel.domain.personal.Personal;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,20 +18,20 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Entreprise {
+public class Enterprise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String numFiscale;
+    private String taxNumber;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "adresse_id", nullable = false)
-    private Adresse adresse;
+    @JoinColumn(name = "address_id", nullable = false)
+    private Address address;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "entreprise", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Personnel> personnels;
+    @OneToMany(mappedBy = "enterprise", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Personal> personals;
 }

@@ -1,7 +1,7 @@
-package com.example.societepersonnel.domain.personnel;
+package com.example.societepersonnel.domain.personal;
 
-import com.example.societepersonnel.domain.adresse.Adresse;
-import com.example.societepersonnel.domain.entreprise.Entreprise;
+import com.example.societepersonnel.domain.address.Address;
+import com.example.societepersonnel.domain.enterprise.Enterprise;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +16,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Data
-public class Personnel {
+public class Personal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,12 +28,12 @@ public class Personnel {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "adresse_id", nullable = false)
-    private Adresse adresse;
+    @JoinColumn(name = "address_id", nullable = false)
+    private Address address;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "entreprise_id", nullable = false)
+    @JoinColumn(name = "enterprise_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Entreprise entreprise;
+    private Enterprise enterprise;
 
 }

@@ -9,11 +9,12 @@ import java.time.LocalDateTime;
 @Builder
 public class ServerResponse {
 
+
     private LocalDateTime timeStamp;
     private String message;
 
-    public ServerResponse(LocalDateTime localDateTime, String message) {
-        this.timeStamp = localDateTime;
+    public ServerResponse(LocalDateTime timeStamp, String message) {
+        this.timeStamp = timeStamp;
         this.message = message;
     }
 }

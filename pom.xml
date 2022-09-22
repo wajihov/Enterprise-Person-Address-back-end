@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>societe-personnel</artifactId>
+    <artifactId>societe-personal</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>societe-personnel</name>
+    <name>societe-personal</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>
@@ -100,8 +100,7 @@
                 <version>2.19.1</version>
             </plugin>
             <plugin>
-                <!--<groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>-->
+
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
                 <version>4.2.3</version>
@@ -131,12 +130,7 @@
                                     @lombok.AllArgsConstructor
                                 </additionalModelTypeAnnotations>
                             </configOptions>
-                            <!--<excludes>
-                                <exclude>
-                                    <groupId>org.projectlombok</groupId>
-                                    <artifactId>lombok</artifactId>
-                                </exclude>
-                            </excludes>-->
+
                         </configuration>
                     </execution>
                 </executions>
