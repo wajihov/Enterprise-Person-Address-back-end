@@ -1,8 +1,7 @@
 package com.example.societepersonnel.domain.enterprise;
 
-import com.example.societepersonnel.core.exception.EntreprisePersonnelException;
+import com.example.societepersonnel.core.exception.EnterprisePersonalException;
 import com.example.societepersonnel.core.rest.Codes;
-import com.example.societepersonnel.core.utils.StringUtils;
 import com.example.societepersonnel.domain.address.Address;
 import com.example.societepersonnel.domain.address.AddressMapper;
 import com.example.societepersonnel.domain.address.AddressService;
@@ -24,15 +23,15 @@ public class EnterpriseService {
     private final AddressMapper addressMapper;
     private final AddressService addressService;
 
-    public EnterpriseService(EnterpriseMapper enterpriseMapper, EnterpriseRepository enterpriseRepository, AddressMapper addressMapper, AddressService addressService) {
+    public EnterpriseService(EnterpriseMapper enterpriseMapper, EnterpriseRepository enterpriseRepository, AddressMapper addressMapper,
+                             AddressService addressService) {
         this.enterpriseMapper = enterpriseMapper;
         this.enterpriseRepository = enterpriseRepository;
         this.addressMapper = addressMapper;
         this.addressService = addressService;
     }
 
-    private Address AddAddressEnterprise(Long id_address) {
-        System.out.println("li des eeeeeeeeeeee : " + id_address);
+    private Address searchEnterpriseAddress(Long id_address) {
         AddressDto addressDto = addressService.findAddressById(id_address);
         Address address = addressMapper.toEntity(addressDto);
         return address;
@@ -40,14 +39,15 @@ public class EnterpriseService {
 
     private Enterprise searchEnterpriseById(Long id) {
         return enterpriseRepository.findById(id).orElseThrow(()
-                -> new EntreprisePersonnelException(Codes.ERR_ENTREPRESE_NOT_FOUND));
+                -> new EnterprisePersonalException(Codes.ERR_ENTREPRESE_NOT_FOUND));
 
     }
 
     public EnterpriseDto createEnterprise(EnterpriseDto enterpriseDto) {
+        // Add personnal ?
         Enterprise enterprise = enterpriseMapper.toEntity(enterpriseDto);
         Long id_addLong = enterpriseDto.getAddressId();
-        Address address = AddAddressEnterprise(id_addLong);
+        Address address = searchEnterpriseAddress(id_addLong);
         enterprise.setAddress(address);
         enterprise = enterpriseRepository.save(enterprise);
         log.info("the addition of the company {}", enterpriseDto.getName());
@@ -67,25 +67,14 @@ public class EnterpriseService {
     }
 
     public EnterpriseDto updateEnterprise(Long id, EnterpriseDto enterpriseDto) {
-        Enterprise currentEnterprise = searchEnterpriseById(id);
-        Enterprise enterpriseUpdate = enterpriseMapper.toEntity(enterpriseDto);
+        Enterprise enterprise = enterpriseMapper.toEntity(enterpriseDto);
+        enterprise.setId(id);
         Long id_address = enterpriseDto.getAddressId();
-        if (!StringUtils.isNullOrEmpty(enterpriseUpdate.getName())) {
-            currentEnterprise.setName(enterpriseUpdate.getName());
-        }
-        if (!StringUtils.isNullOrEmpty(enterpriseUpdate.getTaxNumber())) {
-            currentEnterprise.setTaxNumber(enterpriseUpdate.getTaxNumber());
-        }
-        if (id_address != null) {
-            Address address = AddAddressEnterprise(id_address);
-            currentEnterprise.setAddress(address);
-        }
-        if (enterpriseUpdate.getPersonals() != null) {
-            currentEnterprise.setPersonals(enterpriseUpdate.getPersonals());
-        }
-        currentEnterprise = enterpriseRepository.save(currentEnterprise);
-        log.info("The company is successfully modified {}", enterpriseDto.getName());
-        return enterpriseMapper.toDto(currentEnterprise);
+        Address address = searchEnterpriseAddress(id_address);
+        enterprise.setAddress(address);
+        enterprise = enterpriseRepository.save(enterprise);
+        log.info("The company is successfully modified {}", enterprise.getName());
+        return enterpriseMapper.toDto(enterprise);
     }
 
     public void deleteEnterprise(Long id) {

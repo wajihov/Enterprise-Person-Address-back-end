@@ -44,7 +44,7 @@ public class AddressController implements AddressesApiDelegate {
 
     @Override
     public ResponseEntity<AddressDto> updateAddress(Long id, AddressDto adresseDto) {
-        AddressDto dto = addressService.modifyAddress(id, adresseDto);
+        AddressDto dto = addressService.updateAddress(id, adresseDto);
         return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
     }
 }

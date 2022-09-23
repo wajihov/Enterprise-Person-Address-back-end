@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
-public class EntreprisePersonnelExceptionHandler {
+public class EnterprisePersonalExceptionHandler {
 
 
-    @ExceptionHandler(EntreprisePersonnelException.class)
-    public ResponseEntity<ServerResponse> handleEPException(EntreprisePersonnelException ex) {
+    @ExceptionHandler(EnterprisePersonalException.class)
+    public ResponseEntity<ServerResponse> handleEPException(EnterprisePersonalException ex) {
         ServerResponse serverResponse = ServerResponse
                 .builder()
                 .timeStamp(LocalDateTime.now())
@@ -31,6 +31,16 @@ public class EntreprisePersonnelExceptionHandler {
                 .message(ex.getMessage())
                 .build();
         return new ResponseEntity<>(serverResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NumberFormatException.class)
+    public ResponseEntity<ServerResponse> handleTypeMismatchException(NumberFormatException ex) {
+        ServerResponse serverResponse = ServerResponse
+                .builder()
+                .timeStamp(LocalDateTime.now())
+                .message(ex.getMessage())
+                .build();
+        return new ResponseEntity<>(serverResponse, HttpStatus.NOT_IMPLEMENTED);
     }
 
 }

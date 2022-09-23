@@ -26,7 +26,7 @@ public class PersonalController implements PersonalsApiDelegate {
     @Override
     public ResponseEntity<Void> deletePersonal(Long id) {
         personalService.deleteEnterprise(id);
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
@@ -44,6 +44,6 @@ public class PersonalController implements PersonalsApiDelegate {
     @Override
     public ResponseEntity<PersonalDto> updatePersonal(Long id, PersonalDto personalDto) {
         PersonalDto dto = personalService.updatePersonal(id, personalDto);
-        return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 }

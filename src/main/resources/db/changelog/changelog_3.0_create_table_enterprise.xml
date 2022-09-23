@@ -7,7 +7,7 @@
     <changeSet id="1" author="wajih">
         <createTable tableName="enterprise">
             <column name="id" type="bigint" autoIncrement="true" startWith="1" incrementBy="1">
-                <constraints primaryKey="true" primaryKeyName="entreprise_id_pk"/>
+                <constraints primaryKey="true" primaryKeyName="enterprise_id_pk"/>
             </column>
             <column name="name" type="varchar(100)"/>
             <column name="tax_number" type="varchar(100)"/>

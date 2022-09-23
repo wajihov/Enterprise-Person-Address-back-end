@@ -1,6 +1,6 @@
 package com.example.societepersonnel.domain.personal;
 
-import com.example.societepersonnel.core.exception.EntreprisePersonnelException;
+import com.example.societepersonnel.core.exception.EnterprisePersonalException;
 import com.example.societepersonnel.core.rest.Codes;
 import com.example.societepersonnel.domain.address.Address;
 import com.example.societepersonnel.domain.address.AddressMapper;
@@ -50,18 +50,24 @@ public class PersonalService {
         return enterprise;
     }
 
+    private Personal addAddressEnterpriseToPersonal(Address address, Enterprise enterprise) {
+        Personal personal = new Personal();
+
+        return personal;
+    }
+
     private Personal searchPersonalById(Long id) {
         return personalRepository.findById(id).orElseThrow(()
-                -> new EntreprisePersonnelException(Codes.ERR_PERSONNEL_NOT_FOUND));
+                -> new EnterprisePersonalException(Codes.ERR_PERSONNEL_NOT_FOUND));
     }
 
     public PersonalDto createPersonal(PersonalDto personalDto) {
-        Personal personal = personalMapper.toEntity(personalDto);
         Long address_id = personalDto.getAddressId();
-        Address address = addAddress(address_id);
-        personal.setAddress(address);
         Long enterprise_id = personalDto.getEnterpriseId();
+        Address address = addAddress(address_id);
         Enterprise enterprise = addEnterprise(enterprise_id);
+        Personal personal = personalMapper.toEntity(personalDto);
+        personal.setAddress(address);
         personal.setEnterprise(enterprise);
         personal = personalRepository.save(personal);
         log.info("Adding a person {}", personalDto.getName());
@@ -80,34 +86,26 @@ public class PersonalService {
         return personalMapper.toDtos(personals);
     }
 
-    public PersonalDto updatePersonal(Long id, PersonalDto personDto) {
-        /*Personal currentPerson = personalMapper.toEntity(personDto);
-        Personal modifyPerson = searchPersonById(id);
-        Long id_adresse = personDto.getAddressId();
-        Long id_entreprise = personDto.getEntrepriseId();
-        if (!StringUtils.isNullOrEmpty(currentPerson.getName())) {
-            modifyPerson.setName(currentPerson.getName());
-        }
-        if (!StringUtils.isNullOrEmpty(currentPerson.getLastName())) {
-            modifyPerson.setLastName(currentPerson.getLastName());
-        }
-        if (currentPerson.getPost() != null) {
-            modifyPerson.setPost(currentPerson.getPost());
-        }
-        if (id_adresse != null) {
-            Address address = addAdresse(id_adresse);
-            modifyPerson.setAddress(address);
-        }
-        if (id_entreprise != null) {
-            Enterprise enterprise = addEntreprise(id_entreprise);
-            modifyPerson.setEnterprise(enterprise);
-        }
-        modifyPerson = personalRepository.save(modifyPerson);*/
-        return null;
+    public PersonalDto updatePersonal(Long id, PersonalDto personalDto) {
+        Long address_id = personalDto.getAddressId();
+        AddressDto addressDto = addressService.findAddressById(address_id);
+        Address address = addressMapper.toEntity(addressDto);
+
+        Long enterprise_id = personalDto.getEnterpriseId();
+        EnterpriseDto enterpriseDto = enterpriseService.findEnterpriseById(enterprise_id);
+        Enterprise enterprise = enterpriseMapper.toEntity(enterpriseDto);
+
+        Personal personal = personalMapper.toEntity(personalDto);
+        personal.setId(id);
+        personal.setAddress(address);
+        personal.setEnterprise(enterprise);
+
+        personal = personalRepository.save(personal);
+        log.info("the person {} is successfully modified", personal.getName());
+        return personalMapper.toDto(personal);
     }
 
     public void deleteEnterprise(Long id) {
-        searchPersonalById(id);
         personalRepository.deleteById(id);
         log.info("deletion of staff {} is done successfully ", id);
     }

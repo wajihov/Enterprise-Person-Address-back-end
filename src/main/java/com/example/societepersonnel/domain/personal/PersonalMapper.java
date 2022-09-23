@@ -1,6 +1,8 @@
 package com.example.societepersonnel.domain.personal;
 
 import com.example.societepersonnel.core.utils.CollectionUtils;
+import com.example.societepersonnel.domain.address.Address;
+import com.example.societepersonnel.domain.enterprise.Enterprise;
 import com.example.societepersonnel.dto.PersonalDto;
 import org.springframework.stereotype.Service;
 
