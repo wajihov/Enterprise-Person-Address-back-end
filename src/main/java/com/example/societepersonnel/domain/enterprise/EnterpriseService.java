@@ -44,12 +44,12 @@ public class EnterpriseService {
     }
 
     public EnterpriseDto createEnterprise(EnterpriseDto enterpriseDto) {
-        Enterprise enterprise = enterpriseMapper.toEntity(enterpriseDto);
 
         AddressDto addressDto = enterpriseDto.getLocalAddress();
         addressDto = addressService.createAddress(addressDto);
-        Address address = addressMapper.toEntity(addressDto);
-        enterprise.setAddress(address);
+        Enterprise enterprise = enterpriseMapper.toEntity(enterpriseDto, addressDto);
+        //Address address = addressMapper.toEntity(addressDto);
+        //enterprise.setAddress(address);
 
         enterprise = enterpriseRepository.save(enterprise);
         log.info("the addition of the company {}", enterpriseDto.getName());
@@ -69,13 +69,12 @@ public class EnterpriseService {
     }
 
     public EnterpriseDto updateEnterprise(Long id, EnterpriseDto enterpriseDto) {
-        Enterprise enterprise = enterpriseMapper.toEntity(enterpriseDto);
 
         AddressDto addressDto = enterpriseDto.getLocalAddress();
         if (StringUtils.isNotNullOrNotEmpty(addressDto.getId())) {
-            addressDto = addressService.updateAddress(addressDto.getId(), addressDto);
+            addressDto = addressService.updateAddress(addressDto.getId(), enterpriseDto.getLocalAddress());
+            Enterprise enterprise = enterpriseMapper.toEntity(enterpriseDto, addressDto);
             enterprise.setId(id);
-            enterprise.setAddress(addressMapper.toEntity(addressDto));
             enterprise = enterpriseRepository.save(enterprise);
             log.info("The company is successfully modified {}", enterprise.getName());
             return enterpriseMapper.toDto(enterprise);

@@ -42,7 +42,6 @@ public class PersonMapper {
                 .lastName(personnelDto.getLastname())
                 .post(Post.valueOf(personnelDto.getPost().getValue()))
                 .address(addressMapper.toEntity(addressDto))
-                //.enterprise(personnelDto.getEnterpriseId())
                 .build();
         return person;
     }

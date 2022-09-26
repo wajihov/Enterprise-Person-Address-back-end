@@ -3,6 +3,7 @@ package com.example.societepersonnel.domain.enterprise;
 import com.example.societepersonnel.core.utils.CollectionUtils;
 import com.example.societepersonnel.domain.address.AddressMapper;
 import com.example.societepersonnel.domain.person.PersonMapper;
+import com.example.societepersonnel.dto.AddressDto;
 import com.example.societepersonnel.dto.EnterpriseDto;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,18 @@ public class EnterpriseMapper {
     public EnterpriseMapper(PersonMapper personMapper, AddressMapper addressMapper) {
         this.personMapper = personMapper;
         this.addressMapper = addressMapper;
+    }
+
+    public Enterprise toEntity(EnterpriseDto enterpriseDto, AddressDto addressDto) {
+        if (enterpriseDto == null) {
+            return null;
+        }
+        return Enterprise.builder()
+                .id(enterpriseDto.getId())
+                .name(enterpriseDto.getName())
+                .taxNumber(enterpriseDto.getTaxNumber())
+                .address(addressMapper.toEntity(addressDto))
+                .build();
     }
 
     public Enterprise toEntity(EnterpriseDto enterpriseDto) {
