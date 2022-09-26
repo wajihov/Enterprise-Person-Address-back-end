@@ -25,9 +25,9 @@ public class AddressController implements AddressesApiDelegate {
     }
 
     @Override
-    public ResponseEntity<List<AddressDto>> findAddresses() {
-        List<AddressDto> dtoList = addressService.listAddressDto();
-        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+    public ResponseEntity<Void> deleteAddress(Long id) {
+        addressService.deleteAddress(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Override
@@ -37,14 +37,14 @@ public class AddressController implements AddressesApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> deleteAddress(Long id) {
-        addressService.deleteAddress(id);
-        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<List<AddressDto>> findAddresses() {
+        List<AddressDto> dtoList = addressService.listAddressDto();
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<AddressDto> updateAddress(Long id, AddressDto adresseDto) {
-        AddressDto dto = addressService.updateAddress(id, adresseDto);
+    public ResponseEntity<AddressDto> updateAddress(Long id, AddressDto addressDto) {
+        AddressDto dto = addressService.updateAddress(id, addressDto);
         return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
     }
 }

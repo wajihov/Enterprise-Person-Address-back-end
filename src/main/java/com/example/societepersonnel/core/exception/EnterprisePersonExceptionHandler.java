@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
-public class EnterprisePersonalExceptionHandler {
+public class EnterprisePersonExceptionHandler {
 
 
-    @ExceptionHandler(EnterprisePersonalException.class)
-    public ResponseEntity<ServerResponse> handleEPException(EnterprisePersonalException ex) {
+    @ExceptionHandler(EnterprisePersonException.class)
+    public ResponseEntity<ServerResponse> handleEPException(EnterprisePersonException ex) {
         ServerResponse serverResponse = ServerResponse
                 .builder()
                 .timeStamp(LocalDateTime.now())

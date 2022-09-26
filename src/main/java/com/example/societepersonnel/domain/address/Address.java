@@ -1,13 +1,14 @@
 package com.example.societepersonnel.domain.address;
 
-import com.example.societepersonnel.domain.enterprise.Enterprise;
-import com.example.societepersonnel.domain.personal.Personal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 @Data
@@ -23,10 +24,4 @@ public class Address {
     private String city;
     private String country;
     private String postalCode;
-
-    @OneToOne(mappedBy = "address")
-    private Personal personal;
-
-    @OneToOne(mappedBy = "address")
-    private Enterprise enterprise;
 }

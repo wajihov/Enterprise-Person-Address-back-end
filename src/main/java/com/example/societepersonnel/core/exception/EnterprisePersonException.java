@@ -4,11 +4,11 @@ import com.example.societepersonnel.core.rest.Codes;
 import lombok.Getter;
 
 @Getter
-public class EnterprisePersonalException extends RuntimeException {
+public class EnterprisePersonException extends RuntimeException {
 
     private Codes codes;
 
-    public EnterprisePersonalException(Codes codes) {
+    public EnterprisePersonException(Codes codes) {
         super(codes.getMessage());
         this.codes = codes;
     }

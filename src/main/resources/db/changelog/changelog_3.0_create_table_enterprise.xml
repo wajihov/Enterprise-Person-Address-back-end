@@ -20,8 +20,8 @@
                                  constraintName="enterprise_address_id_fk" referencedTableName="address"
                                  referencedColumnNames="id"/>
 
-        <addForeignKeyConstraint baseTableName="personal" baseColumnNames="enterprise_id"
-                                 constraintName="personal_enterprise_id_fk"
+        <addForeignKeyConstraint baseTableName="person" baseColumnNames="enterprise_id"
+                                 constraintName="person_enterprise_id_fk"
                                  referencedTableName="enterprise" referencedColumnNames="id"/>
 
     </changeSet>

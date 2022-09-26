@@ -1,6 +1,6 @@
 package com.example.societepersonnel.domain.address;
 
-import com.example.societepersonnel.core.exception.EnterprisePersonalException;
+import com.example.societepersonnel.core.exception.EnterprisePersonException;
 import com.example.societepersonnel.core.rest.Codes;
 import com.example.societepersonnel.dto.AddressDto;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class AddressService {
 
     private Address searchAddressById(Long id) {
         return addressRepository.findById(id).orElseThrow(() ->
-                new EnterprisePersonalException(Codes.ERR_ADRESS_NOT_FOUND));
+                new EnterprisePersonException(Codes.ERR_ADRESS_NOT_FOUND));
     }
 
     public AddressDto createAddress(AddressDto addressDto) {
@@ -36,9 +36,9 @@ public class AddressService {
 
     public AddressDto findAddressById(Long id) {
         Address address = searchAddressById(id);
-        AddressDto adresseDto = addressMapper.toDto(address);
+        AddressDto addressDto = addressMapper.toDto(address);
         log.info("the address searched is {}", address.getAddress());
-        return adresseDto;
+        return addressDto;
     }
 
     public List<AddressDto> listAddressDto() {
@@ -56,6 +56,7 @@ public class AddressService {
         Address address = addressMapper.toEntity(addressDto);
         address.setId(id);
         address = addressRepository.save(address);
+        log.info("the address with id {} has been successfully modified", id);
         return addressMapper.toDto(address);
     }
 

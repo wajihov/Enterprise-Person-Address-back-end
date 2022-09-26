@@ -1,7 +1,7 @@
 package com.example.societepersonnel.domain.enterprise;
 
 import com.example.societepersonnel.domain.address.Address;
-import com.example.societepersonnel.domain.personal.Personal;
+import com.example.societepersonnel.domain.person.Person;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,5 +33,5 @@ public class Enterprise {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "enterprise", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Personal> personals;
+    private List<Person> persons;
 }

@@ -1,4 +1,4 @@
-package com.example.societepersonnel.domain.personal;
+package com.example.societepersonnel.domain.person;
 
 import com.example.societepersonnel.domain.address.Address;
 import com.example.societepersonnel.domain.enterprise.Enterprise;
@@ -16,7 +16,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Data
-public class Personal {
+public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
