@@ -62,7 +62,6 @@ public class PersonService {
 
         Long enterprise_id = personDto.getEnterpriseId();
         Enterprise enterprise = findEnterpriseWithId(enterprise_id);
-        //EnterpriseDto enterpriseDto = enterpriseMapper.toDto(enterprise);
 
         Person person = personMapper.toEntity(personDto, addressDto);
         person.setEnterprise(enterprise);
