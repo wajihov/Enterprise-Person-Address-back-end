@@ -83,7 +83,6 @@ public class AddressControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(IsAnything.anything()));
-
     }
 
     @Test
@@ -93,7 +92,6 @@ public class AddressControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(IsAnything.anything()));
-
     }
 
 
