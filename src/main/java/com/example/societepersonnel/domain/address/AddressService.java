@@ -29,7 +29,7 @@ public class AddressService {
 
     public AddressDto createAddress(AddressDto addressDto) {
         Address address = addressMapper.toEntity(addressDto);
-        log.info("adress = {} ",address);
+        log.info("adress = {} ", address);
         address = addressRepository.save(address);
         //log.info("the address is added successfully {}", address.getAddress());
         return addressMapper.toDto(address);
