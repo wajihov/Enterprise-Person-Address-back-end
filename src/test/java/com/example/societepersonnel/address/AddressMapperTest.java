@@ -41,7 +41,6 @@ public class AddressMapperTest {
         addressMapper.toEntity(addressDto);
         //THEN
         Assertions.assertEquals(addressDto.getClass(), AddressDto.class);
-
     }
 
 
