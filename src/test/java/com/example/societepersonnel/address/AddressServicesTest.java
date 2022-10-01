@@ -23,10 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AddressServicesTest {
 
     @MockBean
-    AddressRepository addressRepository;
+    private AddressRepository addressRepository;
     @Autowired
-    AddressService addressService;
-
+    private AddressService addressService;
     @Captor
     private ArgumentCaptor<Address> addressArgumentCaptor;
 
@@ -50,7 +49,8 @@ public class AddressServicesTest {
         assertEquals(address.getCountry(), addressDto.getCountry());
         assertEquals(address.getPostalCode(), addressDto.getPostalCode());
     }
-// does not work
+
+    // does not work
     @Test
     void GIVEN_addressDtoId_WHEN_deleteAddress_THEN_SHOULD_delete_from_database() {
         //GIVEN

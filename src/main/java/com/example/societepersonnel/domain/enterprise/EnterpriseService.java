@@ -76,14 +76,14 @@ public class EnterpriseService {
             Enterprise enterprise = enterpriseMapper.toEntity(enterpriseDto, addressDto);
             enterprise.setId(id);
             enterprise = enterpriseRepository.save(enterprise);
-            log.info("The company is successfully modified {}", enterprise.getName());
-            return enterpriseMapper.toDto(enterprise);
+            //log.info("The company is successfully modified {}", enterprise.getName());
+            EnterpriseDto dto = enterpriseMapper.toDto(enterprise);
+            return dto;
         } else
             throw new EnterprisePersonException(Codes.ERR_ADRESS_NOT_VAlID);
     }
 
     public void deleteEnterprise(Long id) {
-        searchEnterpriseById(id);
         enterpriseRepository.deleteById(id);
         log.info("The company is successfully deleted with the id {}", id);
     }
