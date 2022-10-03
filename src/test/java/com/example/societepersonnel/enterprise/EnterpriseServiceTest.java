@@ -60,7 +60,6 @@ public class EnterpriseServiceTest {
         Assertions.assertEquals(enterpriseDto.getLocalAddress().getPostalCode(), enterprise.getAddress().getPostalCode());
     }
 
-    // does not work
     @Test
     void GIVEN_Id_Enterprise_WHEN_deleteEnterpriseById_tHEN_SHOULD_delete_from_database() {
         //GIVEN
@@ -69,10 +68,10 @@ public class EnterpriseServiceTest {
         address.setAddress("Street Ibn Zohar");
         address.setCity("Reads");
         address.setCountry("Tunisia");
-        //addressDto.setPostalCode();
+        address.setPostalCode("");
 
         Enterprise enterprise = new Enterprise();
-        enterprise.setId(2L);
+        enterprise.setId(1L);
         enterprise.setName("Fasten-Yt");
         enterprise.setTaxNumber("FT4531-RT");
         enterprise.setAddress(address);
@@ -102,7 +101,7 @@ public class EnterpriseServiceTest {
         firstAddress.setAddress("Street Ibn Zohar");
         firstAddress.setCity("Reads");
         firstAddress.setCountry("Tunisia");
-        //addressDto.setPostalCode();
+        firstAddress.setPostalCode(null);
 
         Enterprise firstEnterprise = new Enterprise();
         firstEnterprise.setName("Fasten-Yt");

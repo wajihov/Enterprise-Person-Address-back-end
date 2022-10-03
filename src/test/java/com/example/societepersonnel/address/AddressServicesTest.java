@@ -34,7 +34,7 @@ public class AddressServicesTest {
         //GIVEN
         AddressDto addressDto = new AddressDto();
         addressDto.setId(1l);
-        addressDto.setAddress("Avenue Farhat Hached");
+        addressDto.setAddress("Avenue Farhad Hashed");
         addressDto.setCity("Tunis");
         addressDto.setCountry("Tunisia");
         addressDto.setPostalCode("2001");
@@ -50,18 +50,16 @@ public class AddressServicesTest {
         assertEquals(address.getPostalCode(), addressDto.getPostalCode());
     }
 
-    // does not work
     @Test
     void GIVEN_addressDtoId_WHEN_deleteAddress_THEN_SHOULD_delete_from_database() {
         //GIVEN
         Address address = new Address();
         address.setId(10l);
-        address.setAddress("Avenue Habib bourguiba");
-        address.setCity("Manouba");
+        address.setAddress("Avenue Habib burger");
+        address.setCity("Manabu");
         address.setCountry("Tunisia");
         address.setPostalCode("2009");
         Mockito.when(addressRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(address));
-
         //WHEN
         addressService.deleteAddress(10l);
 
@@ -80,8 +78,8 @@ public class AddressServicesTest {
         //GIVEN
         Address address = new Address();
         address.setId(1L);
-        address.setAddress("Avenue Habib bourguiba");
-        address.setCity("Manouba");
+        address.setAddress("Avenue Habib bourbon");
+        address.setCity("Manitoba");
         address.setCountry("Tunisia");
         address.setPostalCode("2009");
         Mockito.when(addressRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.of(address));
@@ -100,8 +98,8 @@ public class AddressServicesTest {
     void GIVEN_2_Address_saved_WHEN_getAllAddress_then_should_return_address_from_database() {
         //GIVEN
         Address address1 = new Address();
-        address1.setAddress("Avenue Hedi nouira");
-        address1.setCity("Manouba");
+        address1.setAddress("Avenue Hedi Noura");
+        address1.setCity("Manual");
         address1.setCountry("Tunisia");
         address1.setPostalCode("2001");
         Address address2 = new Address();
@@ -114,9 +112,9 @@ public class AddressServicesTest {
         addresses.add(address2);
         Mockito.when(addressRepository.findAll()).thenReturn(addresses);
         //WHEN
-        List<AddressDto> addressDtos = addressService.listAddressDto();
+        List<AddressDto> addressLists = addressService.listAddressDto();
         //THEN
-        Assertions.assertEquals(2, addressDtos.size());
+        Assertions.assertEquals(2, addressLists.size());
     }
 
     @Test

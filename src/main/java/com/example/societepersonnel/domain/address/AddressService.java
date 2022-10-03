@@ -29,9 +29,9 @@ public class AddressService {
 
     public AddressDto createAddress(AddressDto addressDto) {
         Address address = addressMapper.toEntity(addressDto);
-        log.info("adress = {} ", address);
+        log.info("address = {} ", address);
         address = addressRepository.save(address);
-        //log.info("the address is added successfully {}", address.getAddress());
+        log.info("the address is added successfully {}", addressDto.getAddress());
         return addressMapper.toDto(address);
     }
 
@@ -49,7 +49,8 @@ public class AddressService {
     }
 
     public void deleteAddress(Long id) {
-        addressRepository.deleteById(id);
+        Address address = searchAddressById(id);
+        addressRepository.delete(address);
         log.info("The deletion of the address number {} is successful", id);
     }
 
@@ -57,7 +58,7 @@ public class AddressService {
         Address address = addressMapper.toEntity(addressDto);
         address.setId(id);
         address = addressRepository.save(address);
-        log.info("the address with id {} has been successfully modified", id);
+        log.info("the address with id {} has been successfully modified", addressDto.getAddress());
         return addressMapper.toDto(address);
     }
 

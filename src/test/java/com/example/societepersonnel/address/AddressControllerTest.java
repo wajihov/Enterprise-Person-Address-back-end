@@ -33,7 +33,7 @@ public class AddressControllerTest {
     void GIVEN_addressDto_WHEN_createAddress_THEN_SHOULD_Get_Response_OK() throws Exception {
         // GIVEN
         AddressDto addressDto = new AddressDto();
-        addressDto.setAddress("Avenue Farhat Hached");
+        addressDto.setAddress("Avenue Farhad Hatched");
         addressDto.setCity("Tunis");
         addressDto.setCountry("Tunisia");
         addressDto.setPostalCode("2001");
@@ -93,6 +93,4 @@ public class AddressControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(IsAnything.anything()));
     }
-
-
 }

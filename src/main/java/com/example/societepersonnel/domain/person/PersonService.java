@@ -3,8 +3,6 @@ package com.example.societepersonnel.domain.person;
 import com.example.societepersonnel.core.exception.EnterprisePersonException;
 import com.example.societepersonnel.core.rest.Codes;
 import com.example.societepersonnel.core.utils.StringUtils;
-import com.example.societepersonnel.domain.address.Address;
-import com.example.societepersonnel.domain.address.AddressMapper;
 import com.example.societepersonnel.domain.address.AddressService;
 import com.example.societepersonnel.domain.enterprise.Enterprise;
 import com.example.societepersonnel.domain.enterprise.EnterpriseMapper;
@@ -25,24 +23,16 @@ public class PersonService {
 
     private final PersonRepository personRepository;
     private final PersonMapper personMapper;
-    private final AddressMapper addressMapper;
     private final AddressService addressService;
     private final EnterpriseMapper enterpriseMapper;
     private final EnterpriseService enterpriseService;
 
-    public PersonService(PersonRepository personRepository, PersonMapper personMapper, AddressMapper addressMapper, AddressService addressService, EnterpriseMapper enterpriseMapper, EnterpriseService enterpriseService) {
+    public PersonService(PersonRepository personRepository, PersonMapper personMapper, AddressService addressService, EnterpriseMapper enterpriseMapper, EnterpriseService enterpriseService) {
         this.personRepository = personRepository;
         this.personMapper = personMapper;
-        this.addressMapper = addressMapper;
         this.addressService = addressService;
         this.enterpriseMapper = enterpriseMapper;
         this.enterpriseService = enterpriseService;
-    }
-
-    private Address getAddressWithId(Long id) {
-        AddressDto addressDto = addressService.findAddressById(id);
-        Address address = addressMapper.toEntity(addressDto);
-        return address;
     }
 
     private Enterprise findEnterpriseWithId(Long id) {
@@ -100,8 +90,9 @@ public class PersonService {
 
     }
 
-    public void deleteEnterprise(Long id) {
-        personRepository.deleteById(id);
+    public void deletePerson(Long id) {
+        Person person = searchPersonById(id);
+        personRepository.delete(person);
         log.info("deletion of staff {} is done successfully ", id);
     }
 

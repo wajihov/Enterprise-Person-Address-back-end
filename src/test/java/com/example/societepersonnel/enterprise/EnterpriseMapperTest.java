@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class EnterpriseMapperTest {
 
     @Autowired
-    EnterpriseMapper enterpriseMapper;
+    private EnterpriseMapper enterpriseMapper;
 
     @Test
     void Given_EnterpriseDto_WHEN_ToDto_THEN_SHOULD_return_Enterprise() {

@@ -25,7 +25,7 @@ public class PersonController implements PersonsApiDelegate {
 
     @Override
     public ResponseEntity<Void> deletePerson(Long id) {
-        personService.deleteEnterprise(id);
+        personService.deletePerson(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
