@@ -24,7 +24,7 @@ public class AddressService {
 
     private Address searchAddressById(Long id) {
         return addressRepository.findById(id).orElseThrow(() ->
-                new EnterprisePersonException(Codes.ERR_ADRESS_NOT_FOUND));
+                new EnterprisePersonException(Codes.ERR_ADDRESS_NOT_FOUND));
     }
 
     public AddressDto createAddress(AddressDto addressDto) {
@@ -38,7 +38,7 @@ public class AddressService {
     public AddressDto findAddressById(Long id) {
         Address address = searchAddressById(id);
         AddressDto addressDto = addressMapper.toDto(address);
-        log.info("the address searched is {}", address.getAddress());
+        log.info("the address searched is {}", addressDto.getAddress());
         return addressDto;
     }
 
@@ -58,7 +58,7 @@ public class AddressService {
         Address address = addressMapper.toEntity(addressDto);
         address.setId(id);
         address = addressRepository.save(address);
-        log.info("the address with id {} has been successfully modified", addressDto.getAddress());
+        log.info("the address with id {} has been successfully modified", address.getAddress());
         return addressMapper.toDto(address);
     }
 

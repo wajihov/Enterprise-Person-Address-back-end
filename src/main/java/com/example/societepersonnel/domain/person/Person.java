@@ -2,6 +2,7 @@ package com.example.societepersonnel.domain.person;
 
 import com.example.societepersonnel.domain.address.Address;
 import com.example.societepersonnel.domain.enterprise.Enterprise;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +32,7 @@ public class Person {
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "enterprise_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

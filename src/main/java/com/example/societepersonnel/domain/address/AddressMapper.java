@@ -1,5 +1,7 @@
 package com.example.societepersonnel.domain.address;
 
+import com.example.societepersonnel.core.exception.EnterprisePersonException;
+import com.example.societepersonnel.core.rest.Codes;
 import com.example.societepersonnel.core.utils.CollectionUtils;
 import com.example.societepersonnel.dto.AddressDto;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,7 @@ public class AddressMapper {
 
     public Address toEntity(AddressDto addressDto) {
         if (addressDto == null) {
-            return null;
+            throw new EnterprisePersonException(Codes.ERR_ADDRESS_NOT_FOUND);
         }
         return Address.builder()
                 .id(addressDto.getId())
@@ -25,7 +27,7 @@ public class AddressMapper {
 
     public AddressDto toDto(Address address) {
         if (address == null) {
-            return null;
+            throw new EnterprisePersonException(Codes.ERR_ADDRESS_NOT_FOUND);
         }
         return AddressDto.builder()
                 .id(address.getId())
@@ -38,7 +40,7 @@ public class AddressMapper {
 
     public List<AddressDto> toDtos(List<Address> addresses) {
         if (CollectionUtils.isNullOrEmpty(addresses)) {
-            return null;
+            throw new EnterprisePersonException(Codes.ERR_ADDRESSES_NOT_FOUND);
         }
         return addresses.stream().map(this::toDto).collect(Collectors.toList());
     }

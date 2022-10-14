@@ -17,7 +17,7 @@ public class EnterpriseMapperTest {
     private EnterpriseMapper enterpriseMapper;
 
     @Test
-    void Given_EnterpriseDto_WHEN_ToDto_THEN_SHOULD_return_Enterprise() {
+    void Given_EnterpriseDto_WHEN_ToEnterprise_THEN_SHOULD_return_Enterprise() {
         //GIVEN
         Address address = new Address();
         address.setId(1l);
@@ -46,7 +46,7 @@ public class EnterpriseMapperTest {
     }
 
     @Test
-    void Given_EnterpriseDto_WHEN_toEnterprise_THEN_SHOULD_return_Enterprise() {
+    void Given_enterprise_WHEN_toDto_THEN_SHOULD_return_enterpriseDto() {
         //GIVEN
         AddressDto addressDto = new AddressDto();
         addressDto.setId(1l);

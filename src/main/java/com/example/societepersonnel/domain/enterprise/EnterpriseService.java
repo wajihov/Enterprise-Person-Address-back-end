@@ -40,7 +40,7 @@ public class EnterpriseService {
 
     private Enterprise searchEnterpriseById(Long id) {
         return enterpriseRepository.findById(id).orElseThrow(()
-                -> new EnterprisePersonException(Codes.ERR_ENTREPRESE_NOT_FOUND));
+                -> new EnterprisePersonException(Codes.ERR_ENTERPRISE_NOT_FOUND));
     }
 
     public EnterpriseDto createEnterprise(EnterpriseDto enterpriseDto) {
@@ -75,7 +75,7 @@ public class EnterpriseService {
             log.info("The company is successfully modified {}", enterpriseDto.getName());
             return enterpriseMapper.toDto(enterprise);
         } else
-            throw new EnterprisePersonException(Codes.ERR_ADRESS_NOT_VAlID);
+            throw new EnterprisePersonException(Codes.ERR_ADDRESS_NOT_VAlID);
     }
 
     public void deleteEnterprise(Long id) {

@@ -43,7 +43,7 @@ public class PersonService {
 
     private Person searchPersonById(Long id) {
         return personRepository.findById(id).orElseThrow(()
-                -> new EnterprisePersonException(Codes.ERR_PERSONNEL_NOT_FOUND));
+                -> new EnterprisePersonException(Codes.ERR_PERSON_NOT_FOUND));
     }
 
     public PersonDto createPerson(PersonDto personDto) {
@@ -86,7 +86,7 @@ public class PersonService {
             person = personRepository.save(person);
             log.info("the person {} is successfully modified", person.getName());
             return personMapper.toDto(person);
-        } else throw new EnterprisePersonException(Codes.ERR_ADRESS_NOT_VAlID);
+        } else throw new EnterprisePersonException(Codes.ERR_ADDRESS_NOT_VAlID);
 
     }
 
