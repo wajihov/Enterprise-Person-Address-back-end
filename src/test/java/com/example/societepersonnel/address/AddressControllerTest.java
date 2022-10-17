@@ -3,6 +3,7 @@ package com.example.societepersonnel.address;
 import com.example.societepersonnel.core.utils.JsonUtils;
 import com.example.societepersonnel.domain.address.AddressService;
 import com.example.societepersonnel.dto.AddressDto;
+import lombok.var;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.mockito.internal.stubbing.answers.CallsRealMethods;
@@ -37,7 +38,7 @@ public class AddressControllerTest {
     @Test
     void GIVEN_addressDto_WHEN_createAddress_THEN_SHOULD_Get_Response_OK() throws Exception {
         // GIVEN
-        AddressDto addressDto = new AddressDto();
+        var addressDto = new AddressDto();
         addressDto.setId(1L);
         addressDto.setAddress("Avenue Farhad Hatched");
         addressDto.setCity("Tunis");
@@ -56,7 +57,7 @@ public class AddressControllerTest {
     @Test
     void GIVEN_addressId_WHEN_deleteAddressById_THEN_should_delete_address_from_database() throws Exception {
         //GIVEN
-        Long addressId = 1l;
+        var addressId = 1l;
         AddressDto addressDto = new AddressDto();
         addressDto.setId(1L);
         addressDto.setAddress("Avenue Farhad Hatched");
@@ -72,8 +73,8 @@ public class AddressControllerTest {
     @Test
     void GIVEN_addressDto_WHEN_updateAddress_THEN_should_update_Address() throws Exception {
         //GIVEN
-        Long addressId = 5l;
-        AddressDto addressDto = new AddressDto();
+        var addressId = 5l;
+        var addressDto = new AddressDto();
         addressDto.setId(5L);
         addressDto.setAddress("Rue Alain Savare");
         addressDto.setCity("Tunis");
@@ -92,15 +93,15 @@ public class AddressControllerTest {
     @Test
     void GIVEN_addressId_WHEN_getAddressById_THEN_should_get_address_from_database() throws Exception {
         //GIVEN
-        Long addressId = 2l;
-        AddressDto addressDto = new AddressDto();
+        var addressId = 2l;
+        var addressDto = new AddressDto();
         addressDto.setId(2L);
         addressDto.setAddress("Rue Alain Savare");
         addressDto.setCity("Tunis");
         addressDto.setCountry("Tunisia");
         addressDto.setPostalCode("6020");
 
-        AddressDto secondAddressDto = new AddressDto();
+        var secondAddressDto = new AddressDto();
         secondAddressDto.setId(3L);
         secondAddressDto.setAddress("Rue Ali Data");
         secondAddressDto.setCity("Nabeel");
@@ -118,14 +119,14 @@ public class AddressControllerTest {
     @Test
     void GIVEN_addresses_WHEN_getAddresses_THEN_should_get_addresses_from_database() throws Exception {
         //GIVEN
-        AddressDto addressDto = new AddressDto();
+        var addressDto = new AddressDto();
         addressDto.setId(1L);
         addressDto.setAddress("Rue Alain Savare");
         addressDto.setCity("Tunis");
         addressDto.setCountry("Tunisia");
         addressDto.setPostalCode("6020");
 
-        AddressDto secondAddressDto = new AddressDto();
+        var secondAddressDto = new AddressDto();
         secondAddressDto.setId(2L);
         secondAddressDto.setAddress("Rue Ali Data");
         secondAddressDto.setCity("Nabeel");

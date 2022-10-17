@@ -28,7 +28,7 @@ public class EnterpriseController implements EnterprisesApiDelegate {
     @Override
     public ResponseEntity<Void> deleteEnterprise(Long id) {
         enterpriseService.deleteEnterprise(id);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override

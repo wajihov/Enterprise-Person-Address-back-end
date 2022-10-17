@@ -81,7 +81,7 @@ public class EnterpriseService {
     public void deleteEnterprise(Long id) {
         Enterprise enterprise = searchEnterpriseById(id);
         enterpriseRepository.delete(enterprise);
-        log.info("The company is successfully deleted with the id {}", id);
+        log.info("The company is successfully deleted with name {}", enterprise.getName());
     }
 
 }

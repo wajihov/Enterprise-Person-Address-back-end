@@ -1,10 +1,12 @@
 package com.example.societepersonnel.enterprise;
 
 import com.example.societepersonnel.domain.address.Address;
+import com.example.societepersonnel.domain.address.AddressMapper;
 import com.example.societepersonnel.domain.enterprise.Enterprise;
 import com.example.societepersonnel.domain.enterprise.EnterpriseMapper;
 import com.example.societepersonnel.dto.AddressDto;
 import com.example.societepersonnel.dto.EnterpriseDto;
+import lombok.var;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,23 +17,25 @@ public class EnterpriseMapperTest {
 
     @Autowired
     private EnterpriseMapper enterpriseMapper;
+    @Autowired
+    private AddressMapper addressMapper;
 
     @Test
-    void Given_EnterpriseDto_WHEN_ToEnterprise_THEN_SHOULD_return_Enterprise() {
+    void Given_Enterprise_WHEN_ToEnterpriseDto_THEN_SHOULD_return_EnterpriseDto() {
         //GIVEN
-        Address address = new Address();
+        var address = new Address();
         address.setId(1l);
         address.setAddress("Street Saudi");
         address.setCity("Manchester");
         address.setCountry("England");
         address.setPostalCode("34567");
 
-        Enterprise enterprise = new Enterprise();
+        var enterprise = new Enterprise();
         enterprise.setName("Ideal School");
         enterprise.setTaxNumber("TR234-TY");
         enterprise.setAddress(address);
         //WHEN
-        EnterpriseDto enterpriseDto = enterpriseMapper.toDto(enterprise);
+        var enterpriseDto = enterpriseMapper.toDto(enterprise);
         //THEN
         //Assertions.assertEquals(enterpriseDto.getClass(), EnterpriseDto.class);
         Assertions.assertEquals(enterpriseDto.getId(), enterprise.getId());
@@ -46,22 +50,22 @@ public class EnterpriseMapperTest {
     }
 
     @Test
-    void Given_enterprise_WHEN_toDto_THEN_SHOULD_return_enterpriseDto() {
+    void Given_enterpriseDto_WHEN_toEntity_THEN_SHOULD_return_enterprise() {
         //GIVEN
-        AddressDto addressDto = new AddressDto();
+        var addressDto = new AddressDto();
         addressDto.setId(1l);
         addressDto.setAddress("Street Farhad Hashed");
         addressDto.setCity("Tunis");
         addressDto.setCountry("Tunisia");
         addressDto.setPostalCode("2001");
 
-        EnterpriseDto enterpriseDto = new EnterpriseDto();
+        var enterpriseDto = new EnterpriseDto();
         enterpriseDto.setId(1l);
         enterpriseDto.setName("Gaeta-EN");
         enterpriseDto.setTaxNumber("345-YUP");
         enterpriseDto.setLocalAddress(addressDto);
         //WHEN
-        Enterprise enterprise = enterpriseMapper.toEntity(enterpriseDto);
+        var enterprise = enterpriseMapper.toEntity(enterpriseDto);
         //THEN
         //Assertions.assertEquals(enterpriseDto.getClass(), EnterpriseDto.class);
         Assertions.assertEquals(enterprise.getId(), enterpriseDto.getId());
@@ -74,4 +78,72 @@ public class EnterpriseMapperTest {
         Assertions.assertEquals(enterprise.getAddress().getCountry(), enterpriseDto.getLocalAddress().getCountry());
         Assertions.assertEquals(enterprise.getAddress().getPostalCode(), enterpriseDto.getLocalAddress().getPostalCode());
     }
+
+    @Test
+    void Given_enterpriseDto_and_AddressDto_WHEN_toEntity_THEN_SHOULD_return_enterprise() {
+        //GIVEN
+        var addressDto = new AddressDto();
+        addressDto.setId(1l);
+        addressDto.setAddress("Street Farhad Hashed");
+        addressDto.setCity("Tunis");
+        addressDto.setCountry("Tunisia");
+        addressDto.setPostalCode("2001");
+
+        var enterpriseDto = new EnterpriseDto();
+        enterpriseDto.setId(1l);
+        enterpriseDto.setName("Gaeta-EN");
+        enterpriseDto.setTaxNumber("345-YUP");
+        //WHEN
+        var enterprise = enterpriseMapper.toEntity(enterpriseDto, addressDto);
+        var address = addressMapper.toEntity(addressDto);
+        //THEN
+        //Assertions.assertEquals(enterpriseDto.getClass(), EnterpriseDto.class);
+        Assertions.assertEquals(enterprise.getId(), enterpriseDto.getId());
+        Assertions.assertEquals(enterprise.getName(), enterpriseDto.getName());
+        Assertions.assertEquals(enterprise.getTaxNumber(), enterpriseDto.getTaxNumber());
+
+        Assertions.assertEquals(enterprise.getAddress().getId(), address.getId());
+        Assertions.assertEquals(enterprise.getAddress().getAddress(), address.getAddress());
+        Assertions.assertEquals(enterprise.getAddress().getCity(), address.getCity());
+        Assertions.assertEquals(enterprise.getAddress().getCountry(), address.getCountry());
+        Assertions.assertEquals(enterprise.getAddress().getPostalCode(), address.getPostalCode());
+    }
+
+    @Test
+    void GIVEN_enterprise_WHEN_toEnterpriseDto_THEN_should_return_Exception() {
+        //GIVEN & WHEN
+        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+            enterpriseMapper.toEntity(null);
+        });
+        Assertions.assertEquals("ENTERPRISE NOT FOUND", e.getMessage());
+    }
+
+    @Test
+    void GIVEN_enterprise_and_Address_WHEN_toEnterpriseDto_THEN_should_return_Exception() {
+        //GIVEN & WHEN
+        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+            enterpriseMapper.toEntity(null, null);
+        });
+        Assertions.assertEquals("ENTERPRISE NOT FOUND", e.getMessage());
+    }
+
+    @Test
+    void GIVEN_enterpriseDto_WHEN_toEnterprise_THEN_should_return_Exception() {
+        //GIVEN & WHEN
+        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+            enterpriseMapper.toDto(null);
+        });
+        Assertions.assertEquals("ENTERPRISE NOT FOUND", e.getMessage());
+    }
+
+    @Test
+    void GIVEN_enterprises_WHEN_toEnterpriseDtoList_THEN_should_return_Exception() {
+        //GIVEN & WHEN
+        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+            enterpriseMapper.toDtos(null);
+        });
+        Assertions.assertEquals("ENTERPRISES NOT FOUND", e.getMessage());
+    }
+
+
 }

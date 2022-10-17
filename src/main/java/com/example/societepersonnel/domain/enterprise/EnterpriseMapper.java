@@ -1,5 +1,7 @@
 package com.example.societepersonnel.domain.enterprise;
 
+import com.example.societepersonnel.core.exception.EnterprisePersonException;
+import com.example.societepersonnel.core.rest.Codes;
 import com.example.societepersonnel.core.utils.CollectionUtils;
 import com.example.societepersonnel.domain.address.AddressMapper;
 import com.example.societepersonnel.domain.person.PersonMapper;
@@ -23,7 +25,7 @@ public class EnterpriseMapper {
 
     public Enterprise toEntity(EnterpriseDto enterpriseDto, AddressDto addressDto) {
         if (enterpriseDto == null) {
-            return null;
+            throw new EnterprisePersonException(Codes.ERR_ENTERPRISE_NOT_FOUND);
         }
         return Enterprise.builder()
                 .id(enterpriseDto.getId())
@@ -35,7 +37,7 @@ public class EnterpriseMapper {
 
     public Enterprise toEntity(EnterpriseDto enterpriseDto) {
         if (enterpriseDto == null) {
-            return null;
+            throw new EnterprisePersonException(Codes.ERR_ENTERPRISE_NOT_FOUND);
         }
         return Enterprise.builder()
                 .id(enterpriseDto.getId())
@@ -47,7 +49,7 @@ public class EnterpriseMapper {
 
     public EnterpriseDto toDto(Enterprise enterprise) {
         if (enterprise == null) {
-            return null;
+            throw new EnterprisePersonException(Codes.ERR_ENTERPRISE_NOT_FOUND);
         }
         return EnterpriseDto.builder()
                 .id(enterprise.getId())
@@ -60,7 +62,7 @@ public class EnterpriseMapper {
 
     public List<EnterpriseDto> toDtos(List<Enterprise> enterprises) {
         if (CollectionUtils.isNullOrEmpty(enterprises)) {
-            return null;
+            throw new EnterprisePersonException(Codes.ERR_ENTERPRISES_NOT_FOUND);
         }
         return enterprises.stream().map(this::toDto).collect(Collectors.toList());
     }

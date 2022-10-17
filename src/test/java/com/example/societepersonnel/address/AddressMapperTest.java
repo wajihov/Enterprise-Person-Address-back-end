@@ -3,6 +3,7 @@ package com.example.societepersonnel.address;
 import com.example.societepersonnel.domain.address.Address;
 import com.example.societepersonnel.domain.address.AddressMapper;
 import com.example.societepersonnel.dto.AddressDto;
+import lombok.var;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +22,14 @@ public class AddressMapperTest {
     @Test
     void GIVEN_address_WHEN_toAddressDto_THEN_should_return_addressDto() {
         //GIVEN
-        Address address = new Address();
+        var address = new Address();
         address.setId(1L);
         address.setAddress("Avenue Farhad Hashed");
         address.setCity("Tunis");
         address.setCountry("Tunisia");
         address.setPostalCode("2001");
         //WHEN
-        AddressDto addressDto = addressMapper.toDto(address);
+        var addressDto = addressMapper.toDto(address);
         //THEN
         //Assertions.assertEquals(addressDto.getClass(), AddressDto.class);
         Assertions.assertEquals(addressDto.getId(), address.getId());
@@ -41,14 +42,14 @@ public class AddressMapperTest {
     @Test
     void Given_AddressDto_WHEN_toAddress_THEN_SHOULD_return_Address() {
         //GIVEN
-        AddressDto addressDto = new AddressDto();
+        var addressDto = new AddressDto();
         addressDto.setId(1L);
         addressDto.setAddress("Avenue Farhad Hashed");
         addressDto.setCity("Tunis");
         addressDto.setCountry("Tunisia");
         addressDto.setPostalCode("2001");
         //WHEN
-        Address address = addressMapper.toEntity(addressDto);
+        var address = addressMapper.toEntity(addressDto);
         //THEN
         //Assertions.assertEquals(addressDto.getClass(), AddressDto.class);
         Assertions.assertEquals(address.getId(), addressDto.getId());
@@ -62,13 +63,13 @@ public class AddressMapperTest {
     @Test
     void Given_AddressDtoList_WHEN_ToDto_THEN_SHOULD_return_Addresses() {
         //GIVEN
-        Address firstAddress = new Address();
+        var firstAddress = new Address();
         firstAddress.setId(1L);
         firstAddress.setAddress("Avenue Farhad Hashed");
         firstAddress.setCity("Tunis");
         firstAddress.setCountry("Tunisia");
         firstAddress.setPostalCode("2001");
-        Address secondAddress = new Address();
+        var secondAddress = new Address();
         secondAddress.setAddress("Avenue Habib Bourgeois");
         secondAddress.setId(2L);
         secondAddress.setCity("Manitoba");

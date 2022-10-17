@@ -51,7 +51,7 @@ public class AddressService {
     public void deleteAddress(Long id) {
         Address address = searchAddressById(id);
         addressRepository.delete(address);
-        log.info("The deletion of the address number {} is successful", id);
+        log.info("The deletion of the address name {} is successful", address.getAddress());
     }
 
     public AddressDto updateAddress(Long id, AddressDto addressDto) {

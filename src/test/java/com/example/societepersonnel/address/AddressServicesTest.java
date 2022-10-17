@@ -56,7 +56,7 @@ public class AddressServicesTest {
         addressDto = addressService.createAddress(addressDto);
         //THEN
         Mockito.verify(addressRepository).save(addressArgumentCaptor.capture());
-        Address addressSaved = addressArgumentCaptor.getValue();
+        var addressSaved = addressArgumentCaptor.getValue();
         assertEquals(addressSaved.getAddress(), addressDto.getAddress());
         assertEquals(addressSaved.getCity(), addressDto.getCity());
         assertEquals(addressSaved.getCountry(), addressDto.getCountry());
@@ -66,7 +66,7 @@ public class AddressServicesTest {
     @Test
     void GIVEN_addressDtoId_WHEN_deleteAddress_THEN_SHOULD_delete_from_database() {
         //GIVEN
-        Address address = new Address();
+        var address = new Address();
         address.setId(10l);
         address.setAddress("Avenue Habib burger");
         address.setCity("Manabu");
@@ -75,10 +75,9 @@ public class AddressServicesTest {
         Mockito.when(addressRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(address));
         //WHEN
         addressService.deleteAddress(10l);
-
         //THEN
         Mockito.verify(addressRepository).delete(addressArgumentCaptor.capture());
-        Address addressFomCaptor = addressArgumentCaptor.getValue();
+        var addressFomCaptor = addressArgumentCaptor.getValue();
         Assertions.assertEquals(address.getId(), addressFomCaptor.getId());
         Assertions.assertEquals(address.getAddress(), addressFomCaptor.getAddress());
         Assertions.assertEquals(address.getCity(), addressFomCaptor.getCity());
@@ -89,7 +88,7 @@ public class AddressServicesTest {
     @Test
     void GIVEN_addressDtoId_WHEN_findAddress_THEN_SHOULD_findAddress_from_database() {
         //GIVEN
-        long addressId = 1L;
+        var addressId = 1L;
         var address = new Address();
         address.setId(1L);
         address.setAddress("Avenue Habib bourbon");
@@ -135,7 +134,6 @@ public class AddressServicesTest {
         firstAddressDto.setPostalCode(firstAddress.getPostalCode());
 
         var secondAddress = new Address();
-
         secondAddress.setAddress("Avenue Med 5");
         secondAddress.setId(2L);
         secondAddress.setCity("Tunis");
@@ -176,7 +174,7 @@ public class AddressServicesTest {
     @Test
     void GIVEN_Address_WHEN_updateAddress_THEN_SHOULD_UPDATE_ON_DATABASE() {
         //GIVEN
-        long addressId = 1L;
+        var addressId = 1L;
         var address = new Address();
         address.setId(1L);
         address.setAddress("Avenue Tarek ibn zed");
