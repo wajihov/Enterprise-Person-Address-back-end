@@ -54,6 +54,4 @@ public class PersonMapper {
         }
         return persons.stream().map(this::toDto).collect(Collectors.toList());
     }
-
-
 }

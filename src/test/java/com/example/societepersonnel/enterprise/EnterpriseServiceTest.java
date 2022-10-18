@@ -49,6 +49,13 @@ public class EnterpriseServiceTest {
         addressDto.setCountry("Tunisia");
         addressDto.setPostalCode("3452");
 
+        var address = new Address();
+        address.setId(addressDto.getId());
+        address.setAddress(addressDto.getAddress());
+        address.setCity(addressDto.getCity());
+        address.setCountry(addressDto.getCountry());
+        address.setPostalCode(addressDto.getPostalCode());
+
         var enterpriseDto = new EnterpriseDto();
         enterpriseDto.setId(1L);
         enterpriseDto.setName("Heatmap-Yu");
@@ -61,7 +68,7 @@ public class EnterpriseServiceTest {
         enterprise.setTaxNumber(enterpriseDto.getTaxNumber());
         enterprise.setAddress(addressMapper.toEntity(enterpriseDto.getLocalAddress()));
 
-
+        Mockito.when(addressService.createAddress(Mockito.any())).thenReturn(addressDto);
         Mockito.when(enterpriseMapper.toEntity(enterpriseDto, addressDto)).thenReturn(enterprise);
         Mockito.when(enterpriseRepository.save(enterprise)).thenReturn(enterprise);
         Mockito.when(enterpriseMapper.toDto(enterprise)).thenReturn(enterpriseDto);
@@ -170,7 +177,7 @@ public class EnterpriseServiceTest {
             }
         };
         Mockito.when(enterpriseRepository.findAll()).thenReturn(enterprises);
-        Mockito.when(enterpriseMapper.toDtos(enterprises)).thenReturn(enterpriseDtoList);
+        Mockito.when(enterpriseMapper.toDtoList(enterprises)).thenReturn(enterpriseDtoList);
         //WHEN
         List<EnterpriseDto> enterpriseList = enterpriseService.findEnterprises();
         //THEN
@@ -316,6 +323,28 @@ public class EnterpriseServiceTest {
         Assertions.assertEquals(firstEnterprise.getAddress().getCity(), enterpriseDto.getLocalAddress().getCity());
         Assertions.assertEquals(firstEnterprise.getAddress().getCountry(), enterpriseDto.getLocalAddress().getCountry());
         Assertions.assertEquals(firstEnterprise.getAddress().getPostalCode(), enterpriseDto.getLocalAddress().getPostalCode());
+    }
+
+    @Test
+    void GIVEN_Enterprise_WHEN_deleteEnterprise_THEN_Should_Return_RuntimeException() {
+        //GIVEN & WHEN
+        var enterprise = new Enterprise();
+        Mockito.when(enterpriseRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.of(enterprise));
+        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+            enterpriseService.deleteEnterprise(null);
+        });
+        Assertions.assertEquals("ENTERPRISE NOT FOUND", e.getMessage());
+    }
+
+    @Test
+    void GIVEN_Enterprise_WHEN_findEnterpriseById_THEN_Should_Return_RuntimeException() {
+        //GIVEN & WHEN
+        var enterprise = new Enterprise();
+        Mockito.when(enterpriseRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.of(enterprise));
+        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+            enterpriseService.findEnterpriseById(null);
+        });
+        Assertions.assertEquals("ENTERPRISE NOT FOUND", e.getMessage());
     }
 }
 

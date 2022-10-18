@@ -60,7 +60,7 @@ public class EnterpriseMapper {
                 .build();
     }
 
-    public List<EnterpriseDto> toDtos(List<Enterprise> enterprises) {
+    public List<EnterpriseDto> toDtoList(List<Enterprise> enterprises) {
         if (CollectionUtils.isNullOrEmpty(enterprises)) {
             throw new EnterprisePersonException(Codes.ERR_ENTERPRISES_NOT_FOUND);
         }

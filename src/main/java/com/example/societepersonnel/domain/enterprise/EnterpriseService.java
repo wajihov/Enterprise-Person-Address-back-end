@@ -32,12 +32,6 @@ public class EnterpriseService {
         this.addressService = addressService;
     }
 
-    private Address searchEnterpriseAddress(Long id_address) {
-        AddressDto addressDto = addressService.findAddressById(id_address);
-        Address address = addressMapper.toEntity(addressDto);
-        return address;
-    }
-
     private Enterprise searchEnterpriseById(Long id) {
         return enterpriseRepository.findById(id).orElseThrow(()
                 -> new EnterprisePersonException(Codes.ERR_ENTERPRISE_NOT_FOUND));
@@ -55,7 +49,7 @@ public class EnterpriseService {
     public List<EnterpriseDto> findEnterprises() {
         List<Enterprise> enterprises = enterpriseRepository.findAll();
         log.info("list the companies {}", enterprises.size());
-        return enterpriseMapper.toDtos(enterprises);
+        return enterpriseMapper.toDtoList(enterprises);
     }
 
     public EnterpriseDto findEnterpriseById(Long id) {
