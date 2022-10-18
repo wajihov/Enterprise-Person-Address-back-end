@@ -56,7 +56,7 @@ public class EnterpriseMapper {
                 .name(enterprise.getName())
                 .taxNumber(enterprise.getTaxNumber())
                 .localAddress(addressMapper.toDto(enterprise.getAddress()))
-                .persons(personMapper.toDtos(enterprise.getPersons()))
+                .persons(personMapper.toDtoList(enterprise.getPersons()))
                 .build();
     }
 

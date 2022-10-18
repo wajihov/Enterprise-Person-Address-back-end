@@ -245,7 +245,7 @@ public class EnterpriseServiceTest {
         Assertions.assertEquals(secondEnterpriseDto.getLocalAddress().getPostalCode(), enterpriseUpdated.getAddress().getPostalCode());
     }
 
-    /*@Test
+    @Test
     void GIVEN_Enterprise_WHEN_updateEnterprise_THEN_Should_Return_RuntimeException() {
         //GIVEN & WHEN
         var firstAddressDto = new AddressDto();
@@ -253,27 +253,14 @@ public class EnterpriseServiceTest {
 
         var firstEnterpriseDto = new EnterpriseDto();
         firstEnterpriseDto.setId(2L);
-        firstEnterpriseDto.setName("Fasten-Yt");
-        firstEnterpriseDto.setTaxNumber("FT4531-RT");
         firstEnterpriseDto.setLocalAddress(firstAddressDto);
 
-        var firstEnterprise = new Enterprise();
-        firstEnterprise.setId(firstEnterpriseDto.getId());
-        firstEnterprise.setName(firstEnterpriseDto.getName());
-        firstEnterprise.setTaxNumber(firstEnterpriseDto.getTaxNumber());
-        firstEnterprise.setAddress(addressMapper.toEntity(firstEnterpriseDto.getLocalAddress()));
-
-        Mockito.when(addressService.updateAddress(Mockito.anyLong(), Mockito.any())).thenReturn(firstAddressDto);
-        Mockito.when(enterpriseMapper.toEntity(firstEnterpriseDto, firstAddressDto)).thenReturn(firstEnterprise);
-        var enterpriseId = 2L;
-        //WHEN
-        enterpriseService.updateEnterprise(enterpriseId, firstEnterpriseDto);
-
+        //WHEN && THEN
         RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            var AddressDto = firstEnterpriseDto.getLocalAddress();
+            enterpriseService.updateEnterprise(firstEnterpriseDto.getId(), firstEnterpriseDto);
         });
         Assertions.assertEquals("ADDRESS NOT VALID", e.getMessage());
-    }*/
+    }
 
     @Test
     void GIVEN_enterpriseDtoById_WHEN_findAddressById_THEN_SHOULD_findAddress_from_database() {

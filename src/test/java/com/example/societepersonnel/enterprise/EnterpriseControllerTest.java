@@ -115,8 +115,8 @@ public class EnterpriseControllerTest {
         enterpriseDto.setName("Fortuna-Tn");
         enterpriseDto.setTaxNumber("KYO976-34");
         enterpriseDto.setLocalAddress(addressDto);
-
         Mockito.when(enterpriseService.findEnterpriseById(Mockito.any())).thenReturn(enterpriseDto);
+        //  WHEN THEN
         mockMvc.perform(get("/enterprises/" + enterpriseId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

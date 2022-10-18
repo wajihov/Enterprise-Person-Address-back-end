@@ -37,8 +37,7 @@ public class PersonService {
 
     private Enterprise findEnterpriseWithId(Long id) {
         EnterpriseDto enterpriseDto = enterpriseService.findEnterpriseById(id);
-        Enterprise enterprise = enterpriseMapper.toEntity(enterpriseDto);
-        return enterprise;
+        return enterpriseMapper.toEntity(enterpriseDto);
     }
 
     private Person searchPersonById(Long id) {
@@ -50,8 +49,8 @@ public class PersonService {
         AddressDto addressDto = personDto.getLocalAddress();
         addressDto = addressService.createAddress(addressDto);
 
-        Long enterprise_id = personDto.getEnterpriseId();
-        Enterprise enterprise = findEnterpriseWithId(enterprise_id);
+        Long enterpriseId = personDto.getEnterpriseId();
+        Enterprise enterprise = findEnterpriseWithId(enterpriseId);
 
         Person person = personMapper.toEntity(personDto, addressDto);
         person.setEnterprise(enterprise);
@@ -69,15 +68,15 @@ public class PersonService {
     public List<PersonDto> findPersons() {
         List<Person> persons = personRepository.findAll();
         log.info("the list of staff is {}", persons.size());
-        return personMapper.toDtos(persons);
+        return personMapper.toDtoList(persons);
     }
 
     public PersonDto updatePerson(Long id, PersonDto personDto) {
         AddressDto addressDto = personDto.getLocalAddress();
         if (StringUtils.isNotNullOrNotEmpty(addressDto.getId())) {
             addressDto = addressService.updateAddress(addressDto.getId(), addressDto);
-            Long enterprise_id = personDto.getEnterpriseId();
-            EnterpriseDto enterpriseDto = enterpriseService.findEnterpriseById(enterprise_id);
+            Long enterpriseId = personDto.getEnterpriseId();
+            EnterpriseDto enterpriseDto = enterpriseService.findEnterpriseById(enterpriseId);
             Enterprise enterprise = enterpriseMapper.toEntity(enterpriseDto);
 
             Person person = personMapper.toEntity(personDto, addressDto);
@@ -93,7 +92,7 @@ public class PersonService {
     public void deletePerson(Long id) {
         Person person = searchPersonById(id);
         personRepository.delete(person);
-        log.info("deletion of staff {} is done successfully ", id);
+        log.info("deletion of staff {} is done successfully ", person.getName());
     }
 
 }
