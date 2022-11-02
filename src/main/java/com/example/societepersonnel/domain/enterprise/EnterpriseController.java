@@ -5,11 +5,13 @@ import com.example.societepersonnel.EnterprisesApiDelegate;
 import com.example.societepersonnel.dto.EnterpriseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 public class EnterpriseController implements EnterprisesApiDelegate {
 
     private final EnterpriseService enterpriseService;
@@ -39,8 +41,8 @@ public class EnterpriseController implements EnterprisesApiDelegate {
 
     @Override
     public ResponseEntity<List<EnterpriseDto>> findEnterprises() {
-        List<EnterpriseDto> dtos = enterpriseService.findEnterprises();
-        return new ResponseEntity<>(dtos, HttpStatus.OK);
+        List<EnterpriseDto> dtoList = enterpriseService.findEnterprises();
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 
     @Override

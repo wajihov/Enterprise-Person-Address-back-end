@@ -33,7 +33,7 @@ public class EnterpriseMapperTest {
     void Given_Enterprise_WHEN_ToEnterpriseDto_THEN_SHOULD_return_EnterpriseDto() {
         //GIVEN
         var address = new Address();
-        address.setId(1l);
+        address.setId(1L);
         address.setAddress("Street Saudi");
         address.setCity("Manchester");
         address.setCountry("England");
@@ -44,12 +44,6 @@ public class EnterpriseMapperTest {
         enterprise.setName("Ideal School");
         enterprise.setTaxNumber("TR234-TY");
         enterprise.setAddress(address);
-
-        var person = new Person();
-        person.setId(null);
-        List<Person> personList = new ArrayList<>();
-        personList.add(person);
-        enterprise.setPersons(personList);
         //WHEN
         var enterpriseDto = enterpriseMapper.toDto(enterprise);
         //THEN
@@ -66,10 +60,34 @@ public class EnterpriseMapperTest {
     }
 
     @Test
+    void Given_EnterpriseDto_WHEN_ToEntity_THEN_SHOULD_return_null() {
+        //GIVEN & WHEN
+        var enterprise = enterpriseMapper.toEntity(null);
+        //THEN
+        Assertions.assertNull(enterprise);
+    }
+
+    @Test
+    void Given_EnterpriseDto_WHEN_ToEntity_THEN_SHOULD_return_null_2() {
+        //GIVEN & WHEN
+        var enterprise = enterpriseMapper.toEntity(null, null);
+        //THEN
+        Assertions.assertNull(enterprise);
+    }
+
+    @Test
+    void Given_Enterprise_WHEN_ToDto_THEN_SHOULD_return_null() {
+        //GIVEN & WHEN
+        var enterpriseDto = enterpriseMapper.toDto(null);
+        //THEN
+        Assertions.assertNull(enterpriseDto);
+    }
+
+    @Test
     void Given_EnterprisesList_WHEN_ToEnterpriseDtoList_THEN_SHOULD_return_EnterpriseDtoList() {
         //GIVEN
         var address = new Address();
-        address.setId(1l);
+        address.setId(1L);
         address.setAddress("Street Saudi");
         address.setCity("Manchester");
         address.setCountry("England");
@@ -81,13 +99,6 @@ public class EnterpriseMapperTest {
         enterprise.setTaxNumber("TR234-TY");
         enterprise.setAddress(address);
 
-        var secondEnterprise = new Enterprise();
-        secondEnterprise.setId(4L);
-        secondEnterprise.setName("Go Partner");
-        secondEnterprise.setTaxNumber("12345Fgt-78");
-        secondEnterprise.setAddress(address);
-
-
         var person = new Person();
         person.setId(2L);
         person.setName("Garrido");
@@ -95,6 +106,12 @@ public class EnterpriseMapperTest {
         person.setPost(Post.EMPLOYEE);
         person.setEnterprise(enterprise);
         person.setAddress(address);
+
+        var secondEnterprise = new Enterprise();
+        secondEnterprise.setId(4L);
+        secondEnterprise.setName("Go Partner");
+        secondEnterprise.setTaxNumber("12345Fgt-78");
+        secondEnterprise.setAddress(address);
 
         var secondPerson = new Person();
         secondPerson.setId(4L);
@@ -104,13 +121,9 @@ public class EnterpriseMapperTest {
         secondPerson.setEnterprise(secondEnterprise);
         secondPerson.setAddress(address);
 
-        List<Person> personList = new ArrayList<>();
-        personList.add(person);
-
-        enterprise.setPersons(personList);
         List<Person> secondPersonList = new ArrayList<>();
         secondPersonList.add(secondPerson);
-
+        enterprise.setPersons(secondPersonList);
         // WHEN
         List<Enterprise> enterpriseList = new ArrayList<>();
         enterpriseList.add(enterprise);
@@ -132,23 +145,21 @@ public class EnterpriseMapperTest {
                 Assertions.assertEquals(enterpriseDtoList.get(i).getPersons().get(j).getName(), enterpriseList.get(i).getPersons().get(j).getName());
                 Assertions.assertEquals(enterpriseDtoList.get(i).getPersons().get(j).getLastname(), enterpriseList.get(i).getPersons().get(j).getLastName());
             }
-
         }
-
     }
 
     @Test
     void Given_enterpriseDto_WHEN_toEntity_THEN_SHOULD_return_enterprise() {
         //GIVEN
         var addressDto = new AddressDto();
-        addressDto.setId(1l);
+        addressDto.setId(1L);
         addressDto.setAddress("Street Farhad Hashed");
         addressDto.setCity("Tunis");
         addressDto.setCountry("Tunisia");
         addressDto.setPostalCode("2001");
 
         var enterpriseDto = new EnterpriseDto();
-        enterpriseDto.setId(1l);
+        enterpriseDto.setId(1L);
         enterpriseDto.setName("Gaeta-EN");
         enterpriseDto.setTaxNumber("345-YUP");
         enterpriseDto.setLocalAddress(addressDto);
@@ -171,14 +182,14 @@ public class EnterpriseMapperTest {
     void Given_enterpriseDto_and_AddressDto_WHEN_toEntity_THEN_SHOULD_return_enterprise() {
         //GIVEN
         var addressDto = new AddressDto();
-        addressDto.setId(1l);
+        addressDto.setId(1L);
         addressDto.setAddress("Street Farhad Hashed");
         addressDto.setCity("Tunis");
         addressDto.setCountry("Tunisia");
         addressDto.setPostalCode("2001");
 
         var enterpriseDto = new EnterpriseDto();
-        enterpriseDto.setId(1l);
+        enterpriseDto.setId(1L);
         enterpriseDto.setName("Gaeta-EN");
         enterpriseDto.setTaxNumber("345-YUP");
         //WHEN
@@ -198,40 +209,10 @@ public class EnterpriseMapperTest {
     }
 
     @Test
-    void GIVEN_enterprise_WHEN_toEnterpriseDto_THEN_should_return_Exception() {
-        //GIVEN & WHEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            enterpriseMapper.toEntity(null);
-        });
-        Assertions.assertEquals("ENTERPRISE NOT FOUND", e.getMessage());
-    }
-
-    @Test
-    void GIVEN_enterprise_and_Address_WHEN_toEnterpriseDto_THEN_should_return_Exception() {
-        //GIVEN & WHEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            enterpriseMapper.toEntity(null, null);
-        });
-        Assertions.assertEquals("ENTERPRISE NOT FOUND", e.getMessage());
-    }
-
-    @Test
-    void GIVEN_enterpriseDto_WHEN_toEnterprise_THEN_should_return_Exception() {
-        //GIVEN & WHEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            enterpriseMapper.toDto(null);
-        });
-        Assertions.assertEquals("ENTERPRISE NOT FOUND", e.getMessage());
-    }
-
-    @Test
     void GIVEN_enterprises_WHEN_toEnterpriseDtoList_THEN_should_return_Exception() {
         //GIVEN & WHEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            enterpriseMapper.toDtoList(null);
-        });
+        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () ->
+                enterpriseMapper.toDtoList(null));
         Assertions.assertEquals("ENTERPRISES NOT FOUND", e.getMessage());
     }
-
-
 }

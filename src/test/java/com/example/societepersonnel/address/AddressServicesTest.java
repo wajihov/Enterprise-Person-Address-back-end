@@ -1,5 +1,6 @@
 package com.example.societepersonnel.address;
 
+import com.example.societepersonnel.core.exception.EnterprisePersonException;
 import com.example.societepersonnel.domain.address.Address;
 import com.example.societepersonnel.domain.address.AddressMapper;
 import com.example.societepersonnel.domain.address.AddressRepository;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +32,8 @@ public class AddressServicesTest {
     private AddressMapper addressMapper;
     @Autowired
     private AddressService addressService;
+    @Captor
+    private ArgumentCaptor<Long> addressIdArgumentCaptor;
     @Captor
     private ArgumentCaptor<Address> addressArgumentCaptor;
 
@@ -76,13 +80,9 @@ public class AddressServicesTest {
         //WHEN
         addressService.deleteAddress(10l);
         //THEN
-        Mockito.verify(addressRepository).delete(addressArgumentCaptor.capture());
-        var addressFomCaptor = addressArgumentCaptor.getValue();
-        Assertions.assertEquals(address.getId(), addressFomCaptor.getId());
-        Assertions.assertEquals(address.getAddress(), addressFomCaptor.getAddress());
-        Assertions.assertEquals(address.getCity(), addressFomCaptor.getCity());
-        Assertions.assertEquals(address.getCountry(), addressFomCaptor.getCountry());
-        Assertions.assertEquals(address.getPostalCode(), addressFomCaptor.getPostalCode());
+        Mockito.verify(addressRepository).deleteById(addressIdArgumentCaptor.capture());
+        var addressFomCaptor = addressIdArgumentCaptor.getValue();
+        Assertions.assertEquals(address.getId(), addressFomCaptor);
     }
 
     @Test
@@ -156,7 +156,7 @@ public class AddressServicesTest {
             }
         };
         Mockito.when(addressRepository.findAll()).thenReturn(addresses);
-        Mockito.when(addressMapper.toDtos(addresses)).thenReturn(addressDtoList);
+        Mockito.when(addressMapper.toDtoList(addresses)).thenReturn(addressDtoList);
         //WHEN
         addressDtoList = addressService.listAddressDto();
         //THEN
@@ -169,6 +169,17 @@ public class AddressServicesTest {
             assertEquals(addressDtoList.get(i).getCountry(), addresses.get(i).getCountry());
             assertEquals(addressDtoList.get(i).getPostalCode(), addresses.get(i).getPostalCode());
         }
+    }
+
+    @Test
+    void GIVEN_listAddress_WHEN_getAllAddress_then_should_return_EnterprisePersonException() {
+        //GIVEN
+        List<Address> addressList = Collections.emptyList();
+        Mockito.when(addressRepository.findAll()).thenReturn(addressList);
+        //
+        EnterprisePersonException e = Assertions.assertThrows(EnterprisePersonException.class, () ->
+                addressService.listAddressDto());
+        Assertions.assertEquals("ADDRESSES NOT FOUND", e.getMessage());
     }
 
     @Test

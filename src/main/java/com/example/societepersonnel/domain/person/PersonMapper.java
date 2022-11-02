@@ -1,7 +1,5 @@
 package com.example.societepersonnel.domain.person;
 
-import com.example.societepersonnel.core.exception.EnterprisePersonException;
-import com.example.societepersonnel.core.rest.Codes;
 import com.example.societepersonnel.core.utils.CollectionUtils;
 import com.example.societepersonnel.domain.address.AddressMapper;
 import com.example.societepersonnel.dto.AddressDto;
@@ -22,7 +20,7 @@ public class PersonMapper {
 
     public PersonDto toDto(Person person) {
         if (person == null) {
-            throw new EnterprisePersonException(Codes.ERR_PERSON_NOT_FOUND);
+            return null;
         }
         return PersonDto.builder()
                 .id(person.getId())
@@ -36,7 +34,7 @@ public class PersonMapper {
 
     public Person toEntity(PersonDto personnelDto, AddressDto addressDto) {
         if (personnelDto == null) {
-            throw new EnterprisePersonException(Codes.ERR_PERSON_NOT_FOUND);
+            return null;
         }
         Person person = Person.builder()
                 .id(personnelDto.getId())
@@ -48,10 +46,25 @@ public class PersonMapper {
         return person;
     }
 
+    public Person toEntity(PersonDto personnelDto) {
+        if (personnelDto == null) {
+            return null;
+        }
+        Person person = Person.builder()
+                .id(personnelDto.getId())
+                .name(personnelDto.getName())
+                .lastName(personnelDto.getLastname())
+                .post(Post.valueOf(personnelDto.getPost().getValue()))
+                .address(addressMapper.toEntity(personnelDto.getLocalAddress()))
+                .build();
+        return person;
+    }
+
     public List<PersonDto> toDtoList(List<Person> persons) {
         if (CollectionUtils.isNullOrEmpty(persons)) {
-            throw new EnterprisePersonException(Codes.ERR_PERSONS_NOT_FOUND);
+            return null;
         }
         return persons.stream().map(this::toDto).collect(Collectors.toList());
     }
+
 }
