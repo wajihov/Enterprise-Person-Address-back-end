@@ -18,19 +18,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableWebMvc
 public class SwaggerConfig {
 
-    /*@Bean
-    public Docket apiDocket() {
-        String groupName = "Swagger";
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(getApiInfo())
-                .groupName(groupName)
-                .select()
-                //.apis(RequestHandlerSelectors.any())
-                .apis(RequestHandlerSelectors.basePackage("com.example.societepersonnel"))
-                .paths(PathSelectors.any())
-                .build();
-    }*/
-
     @Bean
     public Docket api() {
         String groupName = "Swagger";
@@ -53,16 +40,6 @@ public class SwaggerConfig {
                 .version("1.0.0")
                 .build();
     }
-
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry
-//                .addResourceHandler("swagger-ui.html")
-//                .addResourceLocations("classpath:/META-INF/resources/");
-//        registry
-//                .addResourceHandler("/webjars/**")
-//                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-//    }
 
     @Bean
     public WebMvcConfigurer webMvcConfigurer() {
