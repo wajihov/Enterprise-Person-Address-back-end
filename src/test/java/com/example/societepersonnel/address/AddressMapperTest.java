@@ -83,9 +83,8 @@ public class AddressMapperTest {
             }
         };
         //WHEN
-        List<AddressDto> addressDtoList = addressMapper.toDtos(addressList);
+        List<AddressDto> addressDtoList = addressMapper.toDtoList(addressList);
         //THEN
-        //Assertions.assertEquals(addressDto.getClass(), AddressDto.class);
         for (int i = 0; i < addressDtoList.size(); i++) {
             Assertions.assertEquals(addressList.get(i).getId(), addressDtoList.get(i).getId());
             Assertions.assertEquals(addressList.get(i).getAddress(), addressDtoList.get(i).getAddress());
@@ -96,31 +95,26 @@ public class AddressMapperTest {
     }
 
     @Test
-    void GIVEN_address_WHEN_toAddressDto_THEN_should_return_Exception() {
+    void Given_AddressDto_WHEN_toAddress_THEN_SHOULD_return_Null() {
         //GIVEN & WHEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            addressMapper.toEntity(null);
-        });
-        Assertions.assertEquals("ADDRESS NOT FOUND", e.getMessage());
+        var addressDto = addressMapper.toDto(null);
+        //THEN
+        Assertions.assertNull(addressDto);
     }
 
     @Test
-    void GIVEN_addressDto_WHEN_toAddress_THEN_should_return_Exception() {
+    void Given_Address_WHEN_toAddressDto_THEN_SHOULD_return_Null() {
         //GIVEN & WHEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            addressMapper.toDto(null);
-        });
-        Assertions.assertEquals("ADDRESS NOT FOUND", e.getMessage());
+        var address = addressMapper.toEntity(null);
+        //THEN
+        Assertions.assertNull(address);
     }
 
     @Test
-    void GIVEN_addresses_WHEN_toAddressesDto_THEN_should_return_Exception() {
+    void Given_AddressDtoList_WHEN_ToDto_THEN_SHOULD_return_Null() {
         //GIVEN & WHEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            addressMapper.toDtos(null);
-        });
-        Assertions.assertEquals("ADDRESSES NOT FOUND", e.getMessage());
-
+        List<AddressDto> addressesDtoList = addressMapper.toDtoList(null);
+        //THEN
+        Assertions.assertNull(addressesDtoList);
     }
-
 }

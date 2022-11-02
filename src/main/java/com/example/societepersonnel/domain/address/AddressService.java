@@ -44,13 +44,16 @@ public class AddressService {
 
     public List<AddressDto> listAddressDto() {
         List<Address> addresses = addressRepository.findAll();
+        if (addresses.isEmpty()) {
+            throw new EnterprisePersonException(Codes.ERR_ADDRESSES_NOT_FOUND);
+        }
         log.info("list {} addresses", addresses.size());
-        return addressMapper.toDtos(addresses);
+        return addressMapper.toDtoList(addresses);
     }
 
     public void deleteAddress(Long id) {
         Address address = searchAddressById(id);
-        addressRepository.delete(address);
+        addressRepository.deleteById(id);
         log.info("The deletion of the address name {} is successful", address.getAddress());
     }
 

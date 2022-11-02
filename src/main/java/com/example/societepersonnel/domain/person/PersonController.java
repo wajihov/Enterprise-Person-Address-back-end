@@ -4,6 +4,7 @@ import com.example.societepersonnel.PersonsApiDelegate;
 import com.example.societepersonnel.dto.PersonDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,8 +32,8 @@ public class PersonController implements PersonsApiDelegate {
 
     @Override
     public ResponseEntity<List<PersonDto>> findAllPersons() {
-        List<PersonDto> personDtos = personService.findPersons();
-        return ResponseEntity.ok(personDtos);
+        List<PersonDto> personDtoList = personService.findPersons();
+        return ResponseEntity.ok(personDtoList);
     }
 
     @Override
@@ -43,7 +44,8 @@ public class PersonController implements PersonsApiDelegate {
 
     @Override
     public ResponseEntity<PersonDto> updatePerson(Long id, PersonDto personDto) {
-        PersonDto dto = personService.updatePerson(id, personDto);
+        PersonDto dto = personService.updatePerson
+                (id, personDto);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 }

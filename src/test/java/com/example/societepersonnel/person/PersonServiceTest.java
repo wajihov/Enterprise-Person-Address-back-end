@@ -1,5 +1,7 @@
 package com.example.societepersonnel.person;
 
+import com.example.societepersonnel.core.exception.EnterprisePersonException;
+import com.example.societepersonnel.core.utils.StringUtils;
 import com.example.societepersonnel.domain.address.Address;
 import com.example.societepersonnel.domain.address.AddressMapper;
 import com.example.societepersonnel.domain.address.AddressService;
@@ -15,12 +17,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +50,9 @@ public class PersonServiceTest {
 
     @Captor
     private ArgumentCaptor<Person> personArgumentCaptor;
+
+    @Captor
+    private ArgumentCaptor<Long> personIdArgumentCaptor;
 
     @Test
     void GIVEN_PersonDto_WHEN_CreatePerson_THEN_Should_save_on_database() {
@@ -220,6 +227,39 @@ public class PersonServiceTest {
     }
 
     @Test
+    void GIVEN_Person_saved_WHEN_getAllPersons_THEN_Should_return_EnterprisePersonException() {
+        //GIVEN
+        List<Person> personList = Collections.emptyList();
+        Mockito.when(personRepository.findAll()).thenReturn(personList);
+        //THEN
+        EnterprisePersonException e = Assertions.assertThrows(EnterprisePersonException.class, () ->
+                personService.findPersons());
+        Assertions.assertEquals("PERSONS NOT FOUND", e.getMessage());
+
+    }
+
+    @Test
+    void GIVEN_Person_update_WHEN_updatePersons_THEN_Should_return_EnterprisePersonException() {
+        var personDto = new PersonDto();
+        personDto.setId(1L);
+        personDto.setName("Alex");
+        personDto.setLastname("Ferguson");
+        personDto.setPost(PersonDto.PostEnum.EMPLOYEE);
+        AddressDto addressDto = new AddressDto();
+        addressDto.setCity("Tunis");
+        personDto.setLocalAddress(addressDto);
+       // Mockito.when(addressMapper.toEntity(Mockito.any())).thenReturn(new Address());
+        try (MockedStatic<StringUtils> utilsMockedStatic = Mockito.mockStatic(StringUtils.class)) {
+            utilsMockedStatic.when(() -> StringUtils.isNotNullOrNotEmpty(personDto.getLocalAddress().getId())).thenReturn(false);
+        }
+        //THEN
+        EnterprisePersonException e = Assertions.assertThrows(EnterprisePersonException.class, () ->
+                personService.updatePerson(personDto.getId(), personDto));
+        Assertions.assertEquals("ADDRESS NOT VALID", e.getMessage());
+
+    }
+
+    @Test
     void GIVEN_Person_update_WHEN_updatePersons_THEN_Should_update_that_person_on_Database() {
         //GIVEN
         var firstAddressDto = new AddressDto();
@@ -379,35 +419,30 @@ public class PersonServiceTest {
         //WHEN
         personService.deletePerson(personId);
         //THEN
-        Mockito.verify(personRepository).delete(personArgumentCaptor.capture());
-        Person personDeleted = personArgumentCaptor.getValue();
-        Assertions.assertEquals(personDeleted.getId(), firstPerson.getId());
-        Assertions.assertEquals(personDeleted.getName(), firstPerson.getName());
-        Assertions.assertEquals(personDeleted.getLastName(), firstPerson.getLastName());
-        Assertions.assertEquals(personDeleted.getPost(), firstPerson.getPost());
-        Assertions.assertEquals(personDeleted.getAddress().getId(), firstPerson.getAddress().getId());
-        Assertions.assertEquals(personDeleted.getEnterprise(), firstPerson.getEnterprise());
+        Mockito.verify(personRepository).deleteById(personIdArgumentCaptor.capture());
+        var personDeleted = personIdArgumentCaptor.getValue();
+        Assertions.assertEquals(personDeleted, firstPerson.getId());
     }
 
     @Test
-    void GIVEN_Person_saved_WHEN_getPersonById_WHEN_toFindPersonById_THEN_SHOULD_return_RuntimeException() {
+    void GIVEN_Person_saved_WHEN_getPersonById_WHEN_toFindPersonById_THEN_SHOULD_return_EnterprisePersonException() {
         //GIVEN && WHEN
         var person = new Person();
         person.setId(null);
         Mockito.when(personRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(person));
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+        EnterprisePersonException e = Assertions.assertThrows(EnterprisePersonException.class, () -> {
             personService.findPersonById(null);
         });
         Assertions.assertEquals("PERSON NOT FOUND", e.getMessage());
     }
 
     @Test
-    void GIVEN_Person_saved_WHEN_getPersonById_WHEN_toDeleteById_THEN_SHOULD_return_RuntimeException() {
+    void GIVEN_Person_saved_WHEN_getPersonById_WHEN_toDeleteById_THEN_SHOULD_return_EnterprisePersonException() {
         //GIVEN && WHEN
         var person = new Person();
         person.setId(null);
         Mockito.when(personRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(person));
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+        EnterprisePersonException e = Assertions.assertThrows(EnterprisePersonException.class, () -> {
             personService.deletePerson(null);
         });
         Assertions.assertEquals("PERSON NOT FOUND", e.getMessage());

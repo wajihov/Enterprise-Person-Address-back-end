@@ -48,7 +48,7 @@ public class PersonControllerTest {
         personDto.setLastname("Bodied");
         personDto.setPost(PersonDto.PostEnum.valueOf("EMPLOYEE"));
         personDto.setLocalAddress(addressDto);
-        personDto.setEnterpriseId(1l);
+        personDto.setEnterpriseId(1L);
         Mockito.when(personService.createPerson(Mockito.any())).thenReturn(personDto);
         //WHEN && THEN
         mockMvc.perform(post("/persons")
@@ -77,7 +77,7 @@ public class PersonControllerTest {
         personDto.setLastname("Bodied");
         personDto.setPost(PersonDto.PostEnum.valueOf("EMPLOYEE"));
         personDto.setLocalAddress(addressDto);
-        personDto.setEnterpriseId(1l);
+        personDto.setEnterpriseId(1L);
 
         Mockito.when(personService.updatePerson(Mockito.anyLong(), Mockito.any())).thenReturn(personDto);
         //WHEN && THEN
@@ -118,7 +118,7 @@ public class PersonControllerTest {
         personDto.setLastname("Bodied");
         personDto.setPost(PersonDto.PostEnum.valueOf("EMPLOYEE"));
         personDto.setLocalAddress(addressDto);
-        personDto.setEnterpriseId(1l);
+        personDto.setEnterpriseId(1L);
         Mockito.when(personService.findPersonById(Mockito.anyLong())).thenReturn(personDto);
 
         // WHEN && THEN
@@ -142,7 +142,7 @@ public class PersonControllerTest {
         addressDto.setPostalCode("2001");
 
         var enterpriseDto = new EnterpriseDto();
-        enterpriseDto.setId(1l);
+        enterpriseDto.setId(1L);
         enterpriseDto.setName("Gaeta-EN");
         enterpriseDto.setTaxNumber("345-YUP");
         enterpriseDto.setLocalAddress(addressDto);
@@ -164,7 +164,7 @@ public class PersonControllerTest {
         secondAddressDto.setPostalCode("7800");
 
         var secondEnterpriseDto = new EnterpriseDto();
-        secondEnterpriseDto.setId(2l);
+        secondEnterpriseDto.setId(2L);
         secondEnterpriseDto.setName("TELETHON");
         secondEnterpriseDto.setTaxNumber("IOP0-98");
         secondEnterpriseDto.setLocalAddress(secondAddressDto);

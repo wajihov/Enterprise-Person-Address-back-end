@@ -25,8 +25,9 @@ public class EnterpriseMapper {
 
     public Enterprise toEntity(EnterpriseDto enterpriseDto, AddressDto addressDto) {
         if (enterpriseDto == null) {
-            throw new EnterprisePersonException(Codes.ERR_ENTERPRISE_NOT_FOUND);
+            return null;
         }
+
         return Enterprise.builder()
                 .id(enterpriseDto.getId())
                 .name(enterpriseDto.getName())
@@ -37,7 +38,7 @@ public class EnterpriseMapper {
 
     public Enterprise toEntity(EnterpriseDto enterpriseDto) {
         if (enterpriseDto == null) {
-            throw new EnterprisePersonException(Codes.ERR_ENTERPRISE_NOT_FOUND);
+            return null;
         }
         return Enterprise.builder()
                 .id(enterpriseDto.getId())
@@ -49,7 +50,7 @@ public class EnterpriseMapper {
 
     public EnterpriseDto toDto(Enterprise enterprise) {
         if (enterprise == null) {
-            throw new EnterprisePersonException(Codes.ERR_ENTERPRISE_NOT_FOUND);
+            return null;
         }
         return EnterpriseDto.builder()
                 .id(enterprise.getId())

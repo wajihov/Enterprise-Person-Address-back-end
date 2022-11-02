@@ -7,10 +7,9 @@ import com.example.societepersonnel.domain.address.AddressService;
 import com.example.societepersonnel.domain.enterprise.Enterprise;
 import com.example.societepersonnel.domain.enterprise.EnterpriseMapper;
 import com.example.societepersonnel.domain.enterprise.EnterpriseService;
-import com.example.societepersonnel.dto.AddressDto;
-import com.example.societepersonnel.dto.EnterpriseDto;
 import com.example.societepersonnel.dto.PersonDto;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -36,7 +35,7 @@ public class PersonService {
     }
 
     private Enterprise findEnterpriseWithId(Long id) {
-        EnterpriseDto enterpriseDto = enterpriseService.findEnterpriseById(id);
+        var enterpriseDto = enterpriseService.findEnterpriseById(id);
         return enterpriseMapper.toEntity(enterpriseDto);
     }
 
@@ -46,52 +45,55 @@ public class PersonService {
     }
 
     public PersonDto createPerson(PersonDto personDto) {
-        AddressDto addressDto = personDto.getLocalAddress();
-        addressDto = addressService.createAddress(addressDto);
+        var addressDto = personDto.getLocalAddress();
+        var addressPersonSaved = addressService.createAddress(addressDto);
 
-        Long enterpriseId = personDto.getEnterpriseId();
-        Enterprise enterprise = findEnterpriseWithId(enterpriseId);
+        var enterpriseId = personDto.getEnterpriseId();
+        var enterprise = findEnterpriseWithId(enterpriseId);
 
-        Person person = personMapper.toEntity(personDto, addressDto);
+        var person = personMapper.toEntity(personDto, addressPersonSaved);
         person.setEnterprise(enterprise);
-        person = personRepository.save(person);
-        log.info("Adding a person {}", personDto.getName());
-        return personMapper.toDto(person);
+        var personSaved = personRepository.save(person);
+        log.info("Adding a person {}", personSaved.getName());
+        return personMapper.toDto(personSaved);
     }
 
     public PersonDto findPersonById(Long id) {
-        Person person = searchPersonById(id);
+        var person = searchPersonById(id);
         log.info("Searching for staff with the id {} ", id);
         return personMapper.toDto(person);
     }
 
     public List<PersonDto> findPersons() {
-        List<Person> persons = personRepository.findAll();
+        var persons = personRepository.findAll();
+        if (persons.isEmpty()) {
+            throw new EnterprisePersonException(Codes.ERR_PERSONS_NOT_FOUND);
+        }
         log.info("the list of staff is {}", persons.size());
         return personMapper.toDtoList(persons);
     }
 
     public PersonDto updatePerson(Long id, PersonDto personDto) {
-        AddressDto addressDto = personDto.getLocalAddress();
+        var addressDto = personDto.getLocalAddress();
         if (StringUtils.isNotNullOrNotEmpty(addressDto.getId())) {
             addressDto = addressService.updateAddress(addressDto.getId(), addressDto);
-            Long enterpriseId = personDto.getEnterpriseId();
-            EnterpriseDto enterpriseDto = enterpriseService.findEnterpriseById(enterpriseId);
-            Enterprise enterprise = enterpriseMapper.toEntity(enterpriseDto);
+            var enterpriseId = personDto.getEnterpriseId();
+            var enterpriseDto = enterpriseService.findEnterpriseById(enterpriseId);
+            var enterprise = enterpriseMapper.toEntity(enterpriseDto);
 
-            Person person = personMapper.toEntity(personDto, addressDto);
+            var person = personMapper.toEntity(personDto, addressDto);
             person.setId(id);
             person.setEnterprise(enterprise);
-            person = personRepository.save(person);
-            log.info("the person {} is successfully modified", person.getName());
-            return personMapper.toDto(person);
+            var personSaved = personRepository.save(person);
+            log.info("the person {} is successfully modified", personSaved.getName());
+            return personMapper.toDto(personSaved);
         } else throw new EnterprisePersonException(Codes.ERR_ADDRESS_NOT_VAlID);
 
     }
 
     public void deletePerson(Long id) {
-        Person person = searchPersonById(id);
-        personRepository.delete(person);
+        var person = searchPersonById(id);
+        personRepository.deleteById(id);
         log.info("deletion of staff {} is done successfully ", person.getName());
     }
 

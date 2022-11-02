@@ -1,5 +1,6 @@
 package com.example.societepersonnel.enterprise;
 
+import com.example.societepersonnel.core.exception.EnterprisePersonException;
 import com.example.societepersonnel.domain.address.Address;
 import com.example.societepersonnel.domain.address.AddressMapper;
 import com.example.societepersonnel.domain.address.AddressService;
@@ -20,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +40,8 @@ public class EnterpriseServiceTest {
     private EnterpriseService enterpriseService;
     @Captor
     private ArgumentCaptor<Enterprise> enterpriseArgumentCaptor;
+    @Captor
+    private ArgumentCaptor<Long> enterpriseIdArgumentCaptor;
 
     @Test
     void GIVEN_EnterpriseDto_WHEN_CreateEnterprise_THEN_Should_save_on_database() {
@@ -104,22 +108,13 @@ public class EnterpriseServiceTest {
         enterprise.setTaxNumber("FT4531-RT");
         enterprise.setAddress(address);
         Mockito.when(enterpriseRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(enterprise));
-
         //WHEN
         var enterpriseId = 1L;
         enterpriseService.deleteEnterprise(enterpriseId);
         //THEN
-        Mockito.verify(enterpriseRepository).delete(enterpriseArgumentCaptor.capture());
-        var enterpriseDeleted = enterpriseArgumentCaptor.getValue();
-        Assertions.assertEquals(enterprise.getId(), enterpriseDeleted.getId());
-        Assertions.assertEquals(enterprise.getName(), enterpriseDeleted.getName());
-        Assertions.assertEquals(enterprise.getTaxNumber(), enterpriseDeleted.getTaxNumber());
-
-        Assertions.assertEquals(enterprise.getAddress().getId(), enterpriseDeleted.getAddress().getId());
-        Assertions.assertEquals(enterprise.getAddress().getAddress(), enterpriseDeleted.getAddress().getAddress());
-        Assertions.assertEquals(enterprise.getAddress().getCity(), enterpriseDeleted.getAddress().getCity());
-        Assertions.assertEquals(enterprise.getAddress().getCountry(), enterpriseDeleted.getAddress().getCountry());
-        Assertions.assertEquals(enterprise.getAddress().getPostalCode(), enterpriseDeleted.getAddress().getPostalCode());
+        Mockito.verify(enterpriseRepository).deleteById(enterpriseIdArgumentCaptor.capture());
+        var enterpriseDeleted = enterpriseIdArgumentCaptor.getValue();
+        Assertions.assertEquals(enterprise.getId(), enterpriseDeleted);
     }
 
     @Test
@@ -253,7 +248,7 @@ public class EnterpriseServiceTest {
     }
 
     @Test
-    void GIVEN_Enterprise_WHEN_updateEnterprise_THEN_Should_Return_RuntimeException() {
+    void GIVEN_Enterprise_WHEN_updateEnterprise_THEN_Should_Return_EnterprisePersonException() {
         //GIVEN & WHEN
         var firstAddressDto = new AddressDto();
         firstAddressDto.setId(null);
@@ -263,9 +258,8 @@ public class EnterpriseServiceTest {
         firstEnterpriseDto.setLocalAddress(firstAddressDto);
 
         //WHEN && THEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            enterpriseService.updateEnterprise(firstEnterpriseDto.getId(), firstEnterpriseDto);
-        });
+        EnterprisePersonException e = Assertions.assertThrows(EnterprisePersonException.class, () ->
+                enterpriseService.updateEnterprise(firstEnterpriseDto.getId(), firstEnterpriseDto));
         Assertions.assertEquals("ADDRESS NOT VALID", e.getMessage());
     }
 
@@ -302,12 +296,6 @@ public class EnterpriseServiceTest {
         secondEnterprise.setTaxNumber("PLO-7890");
         secondEnterprise.setAddress(secondAddress);
 
-        List<Enterprise> enterprises = new ArrayList<Enterprise>() {
-            {
-                add(firstEnterprise);
-                add(secondEnterprise);
-            }
-        };
         Mockito.when(enterpriseMapper.toEntity(firstEnterpriseDto)).thenReturn(firstEnterprise);
         Mockito.when(enterpriseRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(firstEnterprise));
         Mockito.when(enterpriseMapper.toDto(firstEnterprise)).thenReturn(firstEnterpriseDto);
@@ -326,25 +314,33 @@ public class EnterpriseServiceTest {
     }
 
     @Test
-    void GIVEN_Enterprise_WHEN_deleteEnterprise_THEN_Should_Return_RuntimeException() {
+    void GIVEN_Enterprise_WHEN_deleteEnterprise_THEN_Should_Return_ExceptionEnterprisePersonException() {
         //GIVEN & WHEN
         var enterprise = new Enterprise();
         Mockito.when(enterpriseRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.of(enterprise));
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            enterpriseService.deleteEnterprise(null);
-        });
+        EnterprisePersonException e = Assertions.assertThrows(EnterprisePersonException.class, () ->
+                enterpriseService.deleteEnterprise(null));
         Assertions.assertEquals("ENTERPRISE NOT FOUND", e.getMessage());
     }
 
     @Test
-    void GIVEN_Enterprise_WHEN_findEnterpriseById_THEN_Should_Return_RuntimeException() {
+    void GIVEN_Enterprise_WHEN_findEnterpriseById_THEN_Should_Return_EnterprisePersonException() {
         //GIVEN & WHEN
         var enterprise = new Enterprise();
         Mockito.when(enterpriseRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.of(enterprise));
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            enterpriseService.findEnterpriseById(null);
-        });
+        EnterprisePersonException e = Assertions.assertThrows(EnterprisePersonException.class, () ->
+                enterpriseService.findEnterpriseById(null));
         Assertions.assertEquals("ENTERPRISE NOT FOUND", e.getMessage());
+    }
+
+    @Test
+    void GIVEN_Enterprises_WHEN_findEnterprises_THEN_Should_Return_EnterprisePersonException() {
+        //GIVEN & WHEN
+        List<Enterprise> enterpriseList = Collections.emptyList();
+        Mockito.when(enterpriseRepository.findAll()).thenReturn(enterpriseList);
+        EnterprisePersonException e = Assertions.assertThrows(EnterprisePersonException.class, () ->
+                enterpriseService.findEnterprises());
+        Assertions.assertEquals("ENTERPRISES NOT FOUND", e.getMessage());
     }
 }
 

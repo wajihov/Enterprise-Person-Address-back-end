@@ -27,7 +27,7 @@ public class PersonMapperTest {
     void Given_Person_WHEN_ToDto_THEN_SHOULD_return_PersonDto() {
         //GIVEN
         var address = new Address();
-        address.setId(1l);
+        address.setId(1L);
         address.setAddress("Street MontPlainer");
         address.setCity("Tunis");
         address.setCountry("Tunisia");
@@ -62,6 +62,39 @@ public class PersonMapperTest {
     }
 
     @Test
+    void Given_Person_WHEN_ToDto_THEN_SHOULD_return_null() {
+        //GIVEN & WHEN
+        var personDto = personMapper.toDto(null);
+        //THEN
+        Assertions.assertNull(personDto);
+    }
+
+    @Test
+    void Given_Person_WHEN_ToEntity_THEN_SHOULD_return_null() {
+        //GIVEN & WHEN
+        var person = personMapper.toEntity(null, null);
+        //THEN
+        Assertions.assertNull(person);
+    }
+
+    @Test
+    void Given_Person_WHEN_ToEntity_THEN_SHOULD_return_null_2() {
+        //GIVEN & WHEN
+        var person = personMapper.toEntity(null);
+        //THEN
+        Assertions.assertNull(person);
+    }
+
+    @Test
+    void Given_ListPerson_WHEN_ToListDtoPerson_THEN_SHOULD_return_null() {
+        //GIVEN & WHEN
+        List<PersonDto> persons = personMapper.toDtoList(null);
+        //THEN
+        Assertions.assertNull(persons);
+    }
+
+
+    @Test
     void Given_PersonDto_WHEN_toPerson_THEN_SHOULD_return_Person() {
         //GIVEN
         var addressDto = new AddressDto();
@@ -72,7 +105,7 @@ public class PersonMapperTest {
         addressDto.setPostalCode("2001");
 
         var enterpriseDto = new EnterpriseDto();
-        enterpriseDto.setId(1l);
+        enterpriseDto.setId(1L);
         enterpriseDto.setName("Gaeta-EN");
         enterpriseDto.setTaxNumber("345-YUP");
         enterpriseDto.setLocalAddress(addressDto);
@@ -100,6 +133,45 @@ public class PersonMapperTest {
         Assertions.assertEquals(person.getAddress().getPostalCode(), personDto.getLocalAddress().getPostalCode());
     }
 
+    @Test
+    void Given_PersonDto_WHEN_toPerson_THEN_SHOULD_return_Person_2() {
+        //GIVEN
+        var addressDto = new AddressDto();
+        addressDto.setId(2L);
+        addressDto.setAddress("Street Farhad Hashed");
+        addressDto.setCity("Tunis");
+        addressDto.setCountry("Tunisia");
+        addressDto.setPostalCode("2001");
+
+        var enterpriseDto = new EnterpriseDto();
+        enterpriseDto.setId(1L);
+        enterpriseDto.setName("Gaeta-EN");
+        enterpriseDto.setTaxNumber("345-YUP");
+        enterpriseDto.setLocalAddress(addressDto);
+
+        var personDto = new PersonDto();
+        personDto.setId(1L);
+        personDto.setEnterpriseId(enterpriseDto.getId());
+        personDto.setName("Filip");
+        personDto.setLastname("Trousers");
+        personDto.setLocalAddress(addressDto);
+        personDto.setPost(PersonDto.PostEnum.valueOf("ADMINISTRATOR"));
+
+        //WHEN
+        var person = personMapper.toEntity(personDto);
+        // THEN
+        //Assertions.assertEquals(personDto.getClass(), PersonDto.class);
+        Assertions.assertEquals(person.getId(), personDto.getId());
+        Assertions.assertEquals(person.getName(), personDto.getName());
+        Assertions.assertEquals(person.getLastName(), personDto.getLastname());
+        Assertions.assertEquals(person.getPost().toString(), personDto.getPost().toString());
+        Assertions.assertEquals(person.getAddress().getId(), personDto.getLocalAddress().getId());
+        Assertions.assertEquals(person.getAddress().getAddress(), personDto.getLocalAddress().getAddress());
+        Assertions.assertEquals(person.getAddress().getCity(), personDto.getLocalAddress().getCity());
+        Assertions.assertEquals(person.getAddress().getCountry(), personDto.getLocalAddress().getCountry());
+        Assertions.assertEquals(person.getAddress().getPostalCode(), personDto.getLocalAddress().getPostalCode());
+    }
+
 
     @Test
     void Given_PersonEntities_WHEN_toPersonList_THEN_SHOULD_return_PersonDtoList() {
@@ -112,7 +184,7 @@ public class PersonMapperTest {
         address.setPostalCode("2001");
 
         var enterprise = new Enterprise();
-        enterprise.setId(1l);
+        enterprise.setId(1L);
         enterprise.setName("Gaeta-EN");
         enterprise.setTaxNumber("345-YUP");
         enterprise.setAddress(address);
@@ -134,7 +206,7 @@ public class PersonMapperTest {
         secondAddress.setPostalCode("7800");
 
         var secondEnterprise = new Enterprise();
-        secondEnterprise.setId(2l);
+        secondEnterprise.setId(2L);
         secondEnterprise.setName("TELETHON");
         secondEnterprise.setTaxNumber("IOP0-98");
         secondEnterprise.setAddress(secondAddress);
@@ -170,32 +242,4 @@ public class PersonMapperTest {
             Assertions.assertEquals(personDtoList.get(i).getLocalAddress().getPostalCode(), personList.get(i).getAddress().getPostalCode());
         }
     }
-
-    @Test
-    void GIVEN_Person_WHEN_toPersonDto_then_should_return_RuntimeException() {
-        //GIVEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            personMapper.toDto(null);
-        });
-        Assertions.assertEquals("PERSON NOT FOUND", e.getMessage());
-    }
-
-    @Test
-    void GIVEN_PersonDto_when_toPerson_then_should_return_RuntimeException() {
-        //GIVEN && THEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            personMapper.toEntity(null, null);
-        });
-        Assertions.assertEquals("PERSON NOT FOUND", e.getMessage());
-    }
-
-    @Test
-    void GIVEN_PersonList_when_toPersonDtoList_THEN_should_return_RuntimeException() {
-        //GIVEN && THEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            personMapper.toDtoList(null);
-        });
-        Assertions.assertEquals("PERSONS NOT FOUND", e.getMessage());
-    }
-
 }
