@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="1" author="wajih">
+
+        <createTable tableName="Address">
+            <column name="id" type="bigint" autoIncrement="true" incrementBy="1" startWith="1">
+                <constraints primaryKey="true" primaryKeyName="address_id_pk"/>
+            </column>
+            <column name="address" type="varchar(100)"/>
+            <column name="city" type="varchar(100)"/>
+            <column name="country" type="varchar(100)"/>
+            <column name="postal_code" type="varchar(100)"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
